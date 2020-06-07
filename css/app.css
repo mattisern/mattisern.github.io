@@ -1,0 +1,81 @@
+body {
+  background-color: #fff;
+}
+
+.preamble {margin-bottom: 1rem;}
+.preamble p {font-size: 1.2rem; font-style: italic; color: #888;line-height: 2.0rem;}
+
+p, li {
+  color: #333;
+font-family: 'Lora', serif;
+}
+
+p, li {
+  font-size: 1.5rem;
+}
+
+li {
+  margin-top: 1rem;
+  line-height: -1rem;
+}
+
+h1, h2, h3 {
+  font-family: 'Ubuntu', sans-serif;
+  color: #222;
+
+}
+
+h1 {
+  font-size: 1.5rem;
+  line-height: 6rem;
+  font-weight: 700;
+  font-style: italic;
+}
+
+h2 {
+	font-size: 2.5rem;
+	margin-top: 0rem;
+	line-height: 3.2rem;
+}
+
+a {
+    color: #0fa3ad;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #13e8f7;
+    text-decoration: none;
+}
+
+
+.intro {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+    padding-right: 2rem;
+
+}
+
+
+@media screen and (min-width: 32em & max-width: 64em) {
+.intro {
+  margin-left: 4rem;
+}
+}
+
+
+@media screen and (min-width: 64em) {
+.intro {
+  margin-top: 6rem;
+}
+}
+
+
+.magic {
+  text-align:right;
+}
+
+
+h2.contact{margin-top: 2rem;}
+.content {padding-bottom: 2rem;}
+p.caption{font-size: 1rem; color: #666; padding-top: 6px; text_align:right;}
