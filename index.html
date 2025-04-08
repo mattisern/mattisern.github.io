@@ -15,7 +15,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">  
-<title>Lightly / Mattis Erngren | Transformational coaching for authentic leadership & creation</title>
+
+
+<title>Mattis Erngren | Transformational coaching for authentic leadership & creation</title>
 
 <style>
 * {
@@ -133,6 +135,18 @@ img {
   margin: 2rem auto;
 }
 
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
 @media screen and (max-width: 600px) {
   h1 {
     margin-top: 1rem;
@@ -148,14 +162,14 @@ img {
 
   <img src="mattis.png" alt="Mattis Erngren" style="width: 100%; max-width: 300px; margin: 2rem auto; display: block;">
 
-<h2 style="font-style: italic;">Results</h2>
-<p>After our work, people tend to speak more honestly.
+<h2 style="font-style: italic;" class="fade-in">Results</h2>
+<p  class="fade-in">After our work, people tend to speak more honestly.
 They make bolder decisions.
 They listen better to others, and to themselves.
 Some change careers. Some change tone. Some learn to be still.</p>
 
-  <h2><span style="font-style: italic;">Clients</span></h2>
-  <p>Spotify, Klarna, PayPal/iZettle, GE Healthcare, 3, Ericsson, and 40+ more.</p>
+  <h2><span style="font-style: italic;"  class="fade-in">Clients</span></h2>
+  <p  class="fade-in">Spotify, Klarna, PayPal/iZettle, GE Healthcare, 3, Ericsson, and 40+ more.</p>
 
   <p style="margin-top: 1.5rem;">From Boston to Brighton, Stockholm to Palo Alto — I've worked wherever I'm needed, in person or remote.</p>
 
@@ -190,18 +204,39 @@ Some change careers. Some change tone. Some learn to be still.</p>
     <a href="https://calendly.com/mattis-ern/30min"><button>Call to action</button></a>
     </div>
 
-
-    <p id="star">✶</p>
-    </div>
-
-</body>
-</html>
-
-<!-- 
-    <h3>Artefacts</h3>
+    <h3>Elsewhere</h3>
     <ul>
     <li>Book reviews and musings at <a href="http://www.dmtpod.se">Det mänskliga tillståndet</a> podcast.</li>
     <li>A <a href="https://www.adlibris.com/se/bok/gudar-ruttna-har-9781387337750">fantasy novel</a>.</li>
     <li>Music creation in <a href="https://yersinia.bandcamp.com">Yersinia</a> and <a href="https://open.spotify.com/track/4ilhm7epticp6SYV9ZpUDf?si=075bf1f35bf9459e">Slutna Ögon</a>.</li>
     <li>Cabin building in Sweden.</li>
-</ul> -->
+</ul>
+
+
+
+<p id="star">✶</p>
+
+
+
+</div>
+
+<script>
+  const elements = document.querySelectorAll('.fade-in');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target); // Animate once
+      }
+    });
+  }, {
+    threshold: 0.1
+  });
+
+  elements.forEach(el => observer.observe(el));
+</script>
+
+
+</body>
+</html>
