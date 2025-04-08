@@ -39,21 +39,28 @@
       font-weight: 400;
       text-align: center;
     }
-    h2 {
+    h1, h2 {
       font-size: 0.7rem;
       color: #aaa;
-    font-family: "Montserrat", sans-serif;
+    font-family:  "Crimson Text", serif;
     font-optical-sizing: auto;
       font-weight: 300;
-      letter-spacing: 0.05rem;
-      text-transform: uppercase;
+      letter-spacing: 0.02rem;
+      font-style: italic;
       text-align: right;
-      margin-top: 7rem;
+      margin-top: 0rem;
       margin-bottom: 1rem;;
       padding-bottom: 0;
       border-bottom: 1px solid #aaa;
       margin-right: 1.5rem;
       margin-left: 0.5rem;
+    }
+    h2 {
+      letter-spacing: 0.05rem;
+      font-family: "Montserrat", sans-serif;
+      text-transform: uppercase;
+      font-style: normal;
+      margin-top: 7rem;
     }
     p {
       font-size: 2rem;
@@ -116,26 +123,36 @@ li {
   padding-left: 0.5rem;
 
 }
+
+@media screen and (max-width: 600px) {
+      }
+      h1 {
+        margin-top: 1rem;
+      }
+      h3 {
+        font-size: 1.4rem;
+      }
+      
+    }
   </style>
 </head>
 <body>
     <div class="container">
-  <h2>Services</h2>
+  <h1>Lightly</h1>
   <p>Hello. I'm <span style="color:#54b3a5;">Mattis</span>. I've been a coach and workshop leader for 10+ years.</p>
 
   <img src="mattis.png" alt="Mattis Erngren" style="width: 100%; max-width: 300px; margin: 2rem auto; display: block;">
 
-  <p> I help individuals and teams to express their authentic self, reach their highest potential and create something that makes the world better.</p>
+  <p> I help individuals and teams express their authentic self, reach their highest potential and create something that makes the world better.</p>
 
 <h3 style="font-style: italic;">Results</h3>
 <p>After our work, people tend to speak more honestly.
 They make bolder decisions.
-They stop pretending.
 They listen better to others, and to themselves.
 Some change careers. Some change tone. Some learn to be still.</p>
 
-  <h3>Clients</h3>
-  <p><span style="font-style: italic;">Spotify, Klarna, PayPal/iZettle, GE Healthcare, 3, Ericsson, and +40 more.</span></p>
+  <h3><span style="font-style: italic;">Clients</span></h3>
+  <p>Spotify, Klarna, PayPal/iZettle, GE Healthcare, 3, Ericsson, and 40+ more.</p>
 
   <p style="margin-top: 1.5rem;">From Boston to Brighton, Stockholm to Palo Alto — I've worked wherever I'm needed, in person or remote.</p>
 
