@@ -18,22 +18,35 @@
 
 
 <title>Mattis Erngren | Transformational coaching for authentic leadership & creation</title>
-
-<style>
-* {
+<style>* {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+:root {
+  --primary-color: #54b3a5;
+  --text-color: #fff;
+  --heading-color: #aaa;
+  --link-color: #ccc;
+  --background-color: #000;
+  --max-width: 600px;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
 html, body {
   overflow-x: hidden;
-  background-color: #000;
-  color: #fff;
+  background-color: var(--background-color);
+  color: var(--text-color);
   font-family: "Crimson Text", serif;
   font-weight: 400;
   font-style: normal;
   width: 100%;
+  line-height: 1.5;
 }
 
 body {
@@ -41,18 +54,19 @@ body {
 }
 
 .container {
-  max-width: 600px;
+  max-width: var(--max-width);
   margin: 0 auto;
   width: 100%;
+  padding: 0 1rem;
 }
 
 h1, h2, h3 {
-  color: #aaa;
+  color: var(--heading-color);
   font-family: "Crimson Text", serif;
   font-optical-sizing: auto;
   font-weight: 300;
   font-style: italic;
-  border-bottom: 1px solid #aaa;
+  border-bottom: 1px solid var(--heading-color);
   padding-top: 2rem;
   margin: 2rem 0 1rem;
   font-size: 0.8rem;
@@ -81,14 +95,19 @@ p {
 
 p#star {
   font-size: 1rem;
-  color: #ccc;
+  color: var(--link-color);
   text-align: center;
   margin: 3rem 0 2rem;
 }
 
 a {
-  color: #ccc;
+  color: var(--link-color);
   text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--primary-color);
 }
 
 table {
@@ -104,23 +123,28 @@ td {
 
 ul {
   margin-left: 1rem;
+  list-style-type: none;
 }
 
 li {
-  color: #fff;
+  color: var(--text-color);
   font-size: 2rem;
   margin-bottom: 1rem;
   font-weight: 200;
+  position: relative;
+  padding-left: 1rem;
 }
 
-li::marker {
-  color: #aaa;
-  content: "◦ ";
+li::before {
+  content: "◦";
+  color: var(--heading-color);
+  position: absolute;
+  left: -1rem;
 }
 
 button {
-  background-color: #54b3a5;
-  color: #fff;
+  background-color: var(--primary-color);
+  color: var(--text-color);
   border: none;
   padding: 1rem 2rem;
   border-radius: 5px;
@@ -130,19 +154,34 @@ button {
   font-style: italic;
   margin-top: 1rem;
   cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background-color: #48a093;
+  transform: translateY(-2px);
+}
+
+button:active {
+  transform: translateY(0);
 }
 
 img {
   display: block;
   max-width: 300px;
+  max-height: 300px;
   width: 100%;
   margin: 2rem auto;
+  border-radius: 4px;
+  object-fit: cover;
+  object-position: top; /* Show only the top portion */
 }
 
 .fade-in {
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  will-change: opacity, transform;
 }
 
 .fade-in.visible {
@@ -150,13 +189,40 @@ img {
   transform: translateY(0);
 }
 
-
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+  
   h1 {
     margin-top: 1rem;
   }
+  
   .container {
-    padding: 0 2rem;
+    padding: 0 1rem;
+  }
+  
+  p {
+    font-size: 1.8rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  html {
+    font-size: 12px;
+  }
+  
+  h1, h2, h3 {
+    padding-top: 1.5rem;
+  }
+  
+  p {
+    font-size: 1.6rem;
+  }
+  
+  img {
+    max-width: 220px;
+    margin: 1.5rem auto;
   }
 }
 </style>
@@ -185,11 +251,11 @@ Some change careers. Some change tone. Some learn to be still.</p>
     <table>
         <tr>
             <td>Workshop</td>
-            <td>1500 €/$</td>
+            <td>1800 €/$</td>
         </tr>
         <tr>
             <td>Coaching</td>
-            <td>300 €/$</td>
+            <td>180 €/$</td>
         </tr>
         <tr>
             <td>Nature retreats</td>
@@ -199,8 +265,6 @@ Some change careers. Some change tone. Some learn to be still.</p>
     <p style="font-size: 1.2rem; line-height: 1.8; text-align: right;"><span>VAT and travel expenses are not included. <br />Non-profits get a 50% discount.</span></p>
 
 
-    <h2 style="font-style: normal">Values</h2>
-    <p style="text-align: center; color:#54b3a5"><span style="font-style: italic;">Presence, authenticity, co-creation.</span></p>
 
 
     <h3>Contact</h3>
@@ -211,6 +275,10 @@ Some change careers. Some change tone. Some learn to be still.</p>
     <div style="text-align: center;">
     <a href="https://calendly.com/mattis-erngren/exploration"><button>Call to action</button></a>
     </div>
+
+    <h2 style="font-style: normal">Values</h2>
+    <p style="text-align: center; color:#54b3a5"><span style="font-style: italic;">Presence, authenticity, co-creation.</span></p>
+
 
     <h3>Elsewhere</h3>
     <p>Some things I’ve made or been part of, for anyone curious.</p>
