@@ -178,16 +178,16 @@ img {
 }
 
 .fade-in {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-  will-change: opacity, transform;
-}
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      will-change: opacity, transform;
+    }
 
-.fade-in.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
 @media screen and (max-width: 768px) {
   html {
@@ -229,89 +229,67 @@ img {
 
 </head>
 <body>
-    <div class="container">
-  <h1>Mission</h1>
-  <p>Hello. I'm <span style="color:#54b3a5;">Mattis</span>. I help individuals and teams express their authentic self, reach their highest potential and create something that makes the world better.</p>
+  <div class="container">
+    <h1>Mission</h1>
+    <p class="fade-in">Hello. I'm <span style="color:#54b3a5;">Mattis</span>. I help individuals and teams express their authentic self, reach their highest potential and create something that makes the world better.</p>
 
-  <img src="mattis.png" alt="Mattis Erngren" style="width: 100%; max-width: 300px; margin: 2rem auto; display: block;">
+    <img src="mattis.png" alt="Mattis Erngren" class="fade-in" style="width: 100%; max-width: 300px; margin: 2rem auto; display: block;" />
 
-  <h2><span style="font-style: italic;">Clients</span></h2>
-  <p  class="fade-in">Spotify, Klarna, PayPal / iZettle, GE Healthcare, 3, Ericsson, and 40+ more.</p>
+    <h2 class="fade-in"><span style="font-style: italic;">Clients</span></h2>
+    <p class="fade-in">Spotify, Klarna, PayPal / iZettle, GE Healthcare, 3, Ericsson, and 40+ more.</p>
+    <p class="fade-in" style="margin-top: 1.5rem;">From Boston to Brighton, Stockholm to Palo Alto — I've worked wherever I'm needed, in person or remote.</p>
 
-  <p style="margin-top: 1.5rem;">From Boston to Brighton, Stockholm to Palo Alto — I've worked wherever I'm needed, in person or remote.</p>
+    <h2 style="font-style: italic;" class="fade-in">Results</h2>
+    <p class="fade-in">Whether I’m working with individuals or teams, the goal is the same: to unlock authentic presence, clarity of purpose, and the courage to act on it. My approach blends practical coaching with deeper transformational work—drawing on psychology and wisdom traditions to support lasting, inside-out change.</p>
+    <p class="fade-in">The outer work follows the inner.</p>
 
-<h2 style="font-style: italic;" class="fade-in">Results</h2>
-<p  class="fade-in">
-  Whether I work with individuals or teams, the goal is the same: unlocking authentic presence, clarity of purpose, and the courage to act from it.
-
-  My approach integrates practical coaching with deeper transformational work—drawing on psychology and wisdom traditions to support long-term change from the inside out.
-</p>
-
-  <h3>Activities</h3>
-    <table>
-        <tr>
-            <td>Team workshop (3h)</td>
-            <td>1600 €/$</td>
-        </tr>
-        <tr>
-            <td>Coaching session (1h)</td>
-            <td>160 €/$</td>
-        </tr>
-        <tr>
-            <td>Nature retreats</td>
-            <td>By request.</td>
-        </tr>
+    <h3 class="fade-in">Activities</h3>
+    <table class="fade-in">
+      <tr><td>Team workshop (3h)</td><td>1600 €/$</td></tr>
+      <tr><td>Coaching session (1h)</td><td>160 €/$</td></tr>
+      <tr><td>Nature retreats (3 days)</td><td>By request.</td></tr>
     </table>
-    <p style="font-size: 1.2rem; line-height: 1.8; text-align: right;"><span>VAT and travel expenses are not included. <br />Non-profits get a 50% discount.</span></p>
+    <p class="fade-in" style="font-size: 1.2rem; line-height: 1.8; text-align: right;"><span>VAT and travel expenses are not included. <br />Non-profits get a 50% discount.</span></p>
 
+    <h3 class="fade-in">Contact</h3>
+    <p class="fade-in">Reach out to explore what's possible.</p>
+    <p class="fade-in">Email: <br /><a href="mailto:mattis.erngren@gmail.com">mattis.erngren@gmail.com</a></p>
+    <p class="fade-in">Phone: <br /><a href="tel:+46709351896">+46 709 351896</a></p>
 
-
-
-    <h3>Contact</h3>
-    <p>Reach out to explore what's possible.</p>
-    <p>Email: <br /><a href="mailto:mattis.erngren@gmail.com">mattis.erngren@gmail.com</a></p>
-    <p>Phone: <br /><a href="tel:+46709351896">+46 709 351896</a></p>
-
-    <div style="text-align: center;">
-    <a href="https://calendly.com/mattis-erngren/exploration"><button>Call to action</button></a>
+    <div style="text-align: center;" class="fade-in">
+      <a href="https://calendly.com/mattis-erngren/exploration"><button>Call to action</button></a>
     </div>
 
-    <h2 style="font-style: normal">Values</h2>
-    <p style="text-align: center; color:#54b3a5"><span style="font-style: italic;">Presence, authenticity, co-creation.</span></p>
+    <h2 style="font-style: normal" class="fade-in">Values</h2>
+    <p class="fade-in" style="text-align: center; color:#54b3a5"><span style="font-style: italic;">Presence, authenticity, co-creation.</span></p>
 
-
-    <h3>Elsewhere</h3>
-    <p>Some things I’ve made or been part of, for anyone curious.</p>
-    <ul>
+    <h3 class="fade-in">Elsewhere</h3>
+    <p class="fade-in">Some things I’ve made or been part of, for anyone curious.</p>
+    <ul class="fade-in">
       <li>Book reviews at <a href="http://www.dmtpod.se">dmtpod.se</a>.</li>
       <li>A <a href="https://www.adlibris.com/se/bok/gudar-ruttna-har-9781387337750">mythic fantasy novel</a>.</li>
       <li><a href="https://open.spotify.com/playlist/0O6SHGGx6t0HJD5l1lLpj6?si=1a7f5053e9c54ae4">Music</a> with friends and on my own.</li>
       <li><a href="https://www.instagram.com/mattisern/">Cabin building</a> in Sweden.</a></li>
     </ul>
 
-<p id="star">✶</p>
-
-
-
-</div>
+    <p id="star" class="fade-in">✶</p>
+  </div>
 
 <script>
   const elements = document.querySelectorAll('.fade-in');
-
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry, index) => {
       if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target); // Animate once
+        const el = entry.target;
+        el.style.transitionDelay = `${index * 0.15}s`;
+        el.classList.add('visible');
+        observer.unobserve(el);
       }
     });
-  }, {
-    threshold: 0.1
-  });
+  }, { threshold: 0.1 });
 
   elements.forEach(el => observer.observe(el));
 </script>
-
 
 </body>
 </html>
