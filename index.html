@@ -66,8 +66,9 @@
       letter-spacing: 0.03rem;
     }
     p {
-      font-size: 2rem;
-      line-height: 1.35;
+  
+      font-size: 1.6rem;
+  line-height: 1.5;
       margin: 0.5rem 0;
     }
     p#star {
@@ -77,11 +78,14 @@
       margin: 3rem 0 2rem;
     }
     a {
-      color: var(--link-color);
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-    a:hover { color: var(--primary-color); }
+  color: #9ed4cb;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+  a:hover {
+    color: var(--primary-color);
+    text-decoration-thickness: 2px;
+}
     table {
       width: 100%;
       border-collapse: collapse;
@@ -97,7 +101,7 @@
     }
     li {
       color: var(--text-color);
-      font-size: 2rem;
+      font-size: 1.6rem;
       margin-bottom: 1rem;
       font-weight: 200;
       position: relative;
@@ -107,7 +111,7 @@
       content: "◦";
       color: var(--heading-color);
       position: absolute;
-      left: -1rem;
+      left: -0.5rem;
     }
     button {
       background-color: var(--primary-color);
@@ -148,11 +152,39 @@
       opacity: 1;
       transform: translateY(0);
     }
+    .soft-underline {
+  text-decoration-line: underline;
+  text-decoration-color: var(--primary-color);    /* light opacity */
+  text-decoration-thickness: 2px;                   /* a bit thicker */
+  text-underline-offset: 3px;                       /* space from text */
+  text-decoration-skip-ink: auto;                   /* avoids descenders */
+}
+.testimonial-block {
+  background-color: #111;
+  border-left: 4px solid var(--primary-color);
+  padding: 1.5rem;
+  margin: 2rem 0;
+  font-size: 1.6rem;
+  font-style: italic;
+  color: #ddd;
+}
+
+.testimonial-block span {
+  display: block;
+  font-size: 1.2rem;
+  font-style: normal;
+  opacity: 0.6;
+  margin-top: 1rem;
+}
+
     @media screen and (max-width: 768px) {
       html { font-size: 14px; }
       h1 { margin-top: 1rem; }
       .container { padding: 0 1rem; }
-      p { font-size: 1.8rem; }
+      p { font-size: 1.4rem; }
+      h1, h3 {
+  text-align: center;
+}
     }
     @media screen and (max-width: 480px) {
       html { font-size: 12px; }
@@ -181,23 +213,26 @@
     <h2 class="fade-in" style="font-style: italic;">Results</h2>
     <p class="fade-in">Whether I’m working with individuals or teams, the goal is the same: to unlock authentic presence, clarity of purpose, and the courage to act on it. My approach blends practical coaching with deeper transformational work, drawing on psychology and wisdom traditions to support the path forward.</p>
     <p class="fade-in">The outer work follows.</p>
-    <p class="fade-in">This is for those ready to journey beneath the surface, where real change begins.</p>
+    <p class="fade-in">This is for those ready to journey beneath the surface, <span class="soft-underline">where real change begins</span>.</p>
 
     <h2 class="fade-in" style="font-style: italic;">Words from clients</h2>
 
-<p class="fade-in" style="opacity: 0.8; font-size: 1.8rem; margin-bottom: 2rem;">
-“Mattis supported me early in my transition into engineering leadership. His presence and guidance helped me understand how to build teams that actually work. Grounded, thoughtful, and clear.”<br />
-<span style="font-size: 1.4rem; opacity: 0.6;">— Tech lead, product company</span>
+<p class="testimonial-block fade-in" style="opacity: 0.8; font-size: 1.8rem; margin-bottom: 2rem;">
+  "A+++ presentation and highly recommended!"<br />
+  <span style="font-size: 1.4rem; opacity: 0.6;">— Product manager, Spotify</span>
 </p>
 
 <p class="fade-in" style="opacity: 0.8; font-size: 1.8rem; margin-bottom: 2rem;">
-“Mattis creates a space where growth happens—not just productivity, but actual mental clarity. What surprised me most was how the work stayed with us long after the session ended.”<br />
-<span style="font-size: 1.4rem; opacity: 0.6;">— Senior leader, engineering org</span>
+  Got great support from Mattis when I first started moving towards engineering management.<br /> 
+   <span style="font-size: 1.4rem; opacity: 0.6;">— Engineering lead, startup</span>
 </p>
 
-<p class="fade-in" style="opacity: 0.8; font-size: 1.8rem;">
-“Mattis held a workshop around stress and mindfulness that was insightful, relevant, and surprisingly grounded in our real day-to-day. We left with tools but also a new language to talk about how we work.”<br />
-<span style="font-size: 1.4rem; opacity: 0.6;">— People lead, telecom industry</span>
+
+<p class="testimonial-block fade-in" style="opacity: 0.8; font-size: 1.8rem; margin-bottom: 2rem;">
+  “Mattis is a joy listening to! With a very personal and easy way he gives both the tools and motivation to improve productivity and reduce stress.”<br />
+  <span style="font-size: 1.4rem; opacity: 0.6;">— Clinical leader, GE Healthcare</span>
+</p>
+
 </p>
 
 <p class="fade-in" style="font-size: 1.4rem; opacity: 0.7; text-align: center; margin-top: 2rem;">
