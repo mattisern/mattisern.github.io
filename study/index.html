@@ -112,9 +112,11 @@
 </h3>
 <p>The cost is 888 USD per person. Last day to register is December 15.</p>
 <!-- Stripe Checkout link (replace with your real Checkout Session URL) -->
-    <a href="https://checkout.stripe.com/c/YOUR_CHECKOUT_SESSION_LINK_HERE" class="button">
-        Secure your spot
-    </a>
+<a href="https://checkout.stripe.com/c/YOUR_LINK"
+   class="button"
+   onclick="gtag('event', 'begin_checkout', {currency: 'USD', value: 888});">
+   Secure your spot
+</a>
     <p class="note">
         You will be taken to a secure Stripe Checkout page to complete your payment.
         Before paying, you will be asked to confirm that you agree to the
