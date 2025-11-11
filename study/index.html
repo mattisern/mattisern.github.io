@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  
+  <title>The Eight Gates</title>
+
+  <!-- Important for mobile -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>The Eight Gates</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Unicase:wght@400;500&family=Spectral:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     body {
@@ -20,9 +21,11 @@
       max-width: 760px;
       margin: 0 auto;
     }
+
     h1 {
       font-family: "Cormorant Unicase", serif;
-      font-size: 3.5rem;
+      /* responsive size */
+      font-size: clamp(2.4rem, 8vw, 3.5rem);
       letter-spacing: 0.18em;
       margin-bottom: 0;
       text-transform: uppercase;
@@ -30,64 +33,117 @@
     }
     h2 {
       font-family: "Cormorant Unicase", serif;
-      font-size: 1.7rem;
+      font-size: clamp(1.2rem, 4.5vw, 1.7rem);
       font-style: italic;
       letter-spacing: 0.22em;
       font-weight: 400;
-      margin-top: 0;
+      margin-top: 0.4rem;
       opacity: 0.8;
     }
+    h3 {
+      font-family: "Cormorant Unicase", serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-top: 2.4rem;
+      margin-bottom: 0.8rem;
+    }
+
     .meta {
       font-size: 0.9rem;
       letter-spacing: 0.16em;
       text-transform: uppercase;
       opacity: 0.7;
+      margin-top: 1.8rem;
       margin-bottom: 3.2em;
     }
+
     p {
-      font-size: 1.04rem;
+      font-size: 1.02rem;
       margin-bottom: 1.3em;
     }
+
+    ol, ul {
+      padding-left: 1.4rem;
+      margin-bottom: 1.4rem;
+    }
+    li {
+      margin-bottom: 0.3rem;
+    }
+
     hr {
       border: none;
       border-top: 1px solid rgba(245, 239, 230, 0.16);
       margin: 2.4em 0;
     }
 
-    img {max-width: 100%; height: auto;}
-        img.flute {max-width: 50%;}
-        div#mattis {overflow: auto;}
-        div#mattis-text {max-width: 60%; float: left; }
-        div#mattis-image {max-width: 30%; float: right;}
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
 
-        .button {
-            display: inline-block;
-            margin-top: 0.8rem;
-            margin-bottom: 0.8rem;
-            padding: 0.7rem 1.6rem;
-            text-decoration: none;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            border-radius: 999px;
-            border: 1px solid #ddd;
-            color: #222;
-            background-color: #ddd;
-        }
-        .button:hover {
-            opacity: 0.9;
-        }
-        .note {
-            font-size: 0.8rem;
-            color: #aaa;
-            margin-top: 1rem;
-        }
+    /* Facilitator block – flex instead of floats */
+    #mattis {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+      margin-top: 0.5rem;
+      margin-bottom: 2.4rem;
+    }
+    #mattis-text {
+      flex: 1 1 60%;
+    }
+    #mattis-image {
+      flex: 0 0 auto;
+      max-width: 180px;
+    }
 
-        @media (max-width: 1768px) { 
-            #mattis-text, #mattis-image {
-                float: none;
-            }
-        }
+    .button {
+      display: inline-block;
+      margin-top: 0.8rem;
+      margin-bottom: 0.8rem;
+      padding: 0.7rem 1.6rem;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      border-radius: 999px;
+      border: 1px solid #f5efe6;
+      color: #0c0c0c;
+      background-color: #f5efe6;
+    }
+    .button:hover {
+      opacity: 0.9;
+    }
 
+    .note {
+      font-size: 0.86rem;
+      color: #b7b0a5;
+      margin-top: 1rem;
+    }
+
+    .note a {
+      color: #ddd;
+      text-decoration: underline;
+    }
+
+    /* Mobile adjustments */
+    @media (max-width: 640px) {
+      body {
+        padding: 32px 16px;
+      }
+      .meta {
+        font-size: 0.8rem;
+        letter-spacing: 0.14em;
+      }
+      #mattis {
+        flex-direction: column-reverse; /* image below text */
+        align-items: flex-start;
+      }
+      #mattis-image {
+        max-width: 140px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -99,64 +155,73 @@
       Sixteen weeks · Reading · Practice · Reflection
     </div>
 
-
     <h3>Overview</h3>
 
-    <p>Between January 5 2026 and April 30 2026 we will go through the Eight Gates of esotericism together. We will study different traditions of the hidden teachings to learn the techniques needed to shape reality.</p>
-    
-    <ol>
-    <li>Metaphysics – structure of higher realities</li>
-    <li>Personal myth: the hero's journey</li>
-    <li>Energy systems</li>
-    <li>Healing & miracles</li>
-    <li>Creation</li>
-    <li>The flow of Tao</li>
-    <li>Alchemy</li>
-    <li>Rituals & ceremonies</li>
-    </ol>
-    <p>We will translate occult knowledge into practical terms of psychology, relationships, and our own Great Work.
+    <p>
+      Between January 5 2026 and April 30 2026 we will go through the Eight Gates of esotericism together.
+      We will study different traditions of the hidden teachings to learn the techniques needed to shape reality.
     </p>
-    
+
+    <ol>
+      <li>Metaphysics – structure of higher realities</li>
+      <li>Personal myth: the hero's journey</li>
+      <li>Energy systems</li>
+      <li>Healing &amp; miracles</li>
+      <li>Creation</li>
+      <li>The flow of Tao</li>
+      <li>Alchemy</li>
+      <li>Rituals &amp; ceremonies</li>
+    </ol>
+
+    <p>
+      We will translate occult knowledge into practical terms of psychology, relationships, and our own Great Work.
+    </p>
+
     <h3>Format</h3>
     <ul>
-        <li>A balance of deep theory and practical applications. </li>
-    <li>Weekly check-ins with your fellow practitioners.</li>
-    <li>A private, encrypted chat for reflections in the group.</li>
-    <li>Shared notes to gather our learnings into our Book.</li>
-    <li>Access to book 1-on-1 sessions for extra support.</li>
+      <li>A balance of deep theory and practical applications.</li>
+      <li>Weekly check-ins with your fellow practitioners.</li>
+      <li>A private, encrypted chat for reflections in the group.</li>
+      <li>Shared notes to gather our learnings into our Book.</li>
+      <li>Access to book 1-on-1 sessions for extra support.</li>
     </ul>
 
-    <p><span style="font-style: italic">If you are interested in in-person retreats and 1on1s, that will be available as well later in the year.</span></p>
-    
-    <div id="mattis">
+    <p><span style="font-style: italic">
+      If you are interested in in-person retreats and 1on1s, that will be available as well later in the year.
+    </span></p>
+
     <h3>Facilitator</h3>
-    <div id="mattis-text"><p>My name is Mattis. I started teaching meditation at tech companies 11 years ago. </p><p>Over the last couple of years, my focus has shifted, and I am now fully devoted to exploring hidden worlds and their applications in personal reality.</p>
+    <div id="mattis">
+      <div id="mattis-text">
+        <p>My name is Mattis. I started teaching meditation at tech companies 11 years ago.</p>
+        <p>Over the last couple of years, my focus has shifted, and I am now fully devoted to exploring hidden worlds and their applications in personal reality.</p>
+      </div>
+      <div id="mattis-image">
+        <img src="mattis2025.png" alt="Mattis">
+      </div>
     </div>
-    <div id="mattis-image"><img src="mattis2025.png" alt="Mattis"/></div>
-    </div>
-    
-    <h3>
-        Register
-    </h3>
+
+    <h3>Register</h3>
     <p>The cost is 888 USD per person. Last day to register is December 15.</p>
-    <!-- Stripe Checkout link (replace with your real Checkout Session URL) -->
+
     <a href="https://buy.stripe.com/9B65kD6zs2TIcEZ8tA2sM00"
        class="button"
        onclick="gtag('event', 'begin_checkout', {currency: 'USD', value: 888});">
        Secure your spot
     </a>
-        <p class="note">
-            You will be taken to a secure Stripe Checkout page to complete your payment.
-            Before paying, you will be asked to confirm that you agree to the
-            <a href="https://mattisern.github.io/contract.html" style="color:#ddd; text-decoration: underline;">participant agreement</a>.
-        </p>
-    
-        <p class="note">
-            After payment, you will be redirected back here and will receive an email from me with all practical details.
-            If anything goes wrong, you can always reach me at
-            <a href="mailto:mattis@lightly.io" style="color:#ddd;">mattis@lightly.io</a>.
-        </p>
-    
-    </div>
-    </body>
-    </html>
+
+    <p class="note">
+      You will be taken to a secure Stripe Checkout page to complete your payment.
+      Before paying, you will be asked to confirm that you agree to the
+      <a href="https://mattisern.github.io/contract.html">participant agreement</a>.
+    </p>
+
+    <p class="note">
+      After payment, you will be redirected back here and will receive an email from me with all practical details.
+      If anything goes wrong, you can always reach me at
+      <a href="mailto:mattis@lightly.io">mattis@lightly.io</a>.
+    </p>
+
+  </div>
+</body>
+</html>
