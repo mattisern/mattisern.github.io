@@ -179,13 +179,20 @@
       }
       #mattis {
         flex-direction: column-reverse; /* image below text */
+        gap: 1rem;
         align-items: flex-start;
         margin-bottom: 1.4rem;          /* was 2.4rem */
       }
       #mattis-image {
-        max-width: 140px;
+        max-width: 280px;
         margin-top: 0.2rem;
-
+      }
+      #mattis-image img {
+        width: 100%;                 /* ensure it expands */
+        height: auto;
+      }
+      #mattis-text {
+        padding-right: 0;
       }
       h3 {
       margin-top: 2.2rem;             /* was 3.4rem */
