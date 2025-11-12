@@ -137,6 +137,9 @@
     .button:hover {
       opacity: 0.9;
     }
+    .button a:hover {
+      color: black;
+    }
 
     .note {
       font-size: 0.86rem;
@@ -152,8 +155,13 @@
       text-align: center;
     }
 
-    p.img-text {text-align: right; font-size: 0.8rem; color: grey; margin-top: 0.4rem; padding: 0;}
-
+    p.img-text {
+  text-align: right;
+  font-size: 0.8rem;
+  color: grey;
+  line-height: 1.2;         /* tighter line box */
+  margin: 0.3rem 0 0;       /* small top margin, no bottom margin */
+}
     /* Mobile adjustments */
     @media (max-width: 640px) {
       body {
@@ -166,10 +174,14 @@
       #mattis {
         flex-direction: column-reverse; /* image below text */
         align-items: flex-start;
+        margin-bottom: 1.4rem;          /* was 2.4rem */
       }
       #mattis-image {
         max-width: 140px;
       }
+      h3 {
+      margin-top: 2.2rem;             /* was 3.4rem */
+    }
     }
   </style>
 </head>
