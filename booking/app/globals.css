@@ -184,3 +184,12 @@ textarea { min-height: 88px; resize: vertical; }
 .hint { color: var(--muted); font-size: 0.85rem; margin: 0; }
 
 .empty { color: var(--muted); margin: 0; }
+
+/* Spam-trap field: off-screen for people, still in the form for bots. */
+.trap {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}

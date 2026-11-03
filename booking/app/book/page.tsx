@@ -1,18 +1,7 @@
-import { Suspense } from "react";
-import type { Metadata } from "next";
-import { booking } from "@/lib/config.ts";
-import BookingFlow from "./BookingFlow.tsx";
+import BookingPage, { bookingMetadata } from "../BookingPage.tsx";
 
-export const metadata: Metadata = { title: `Book: ${booking.session.name}` };
+export const metadata = bookingMetadata("conversation");
 
-export default function BookPage() {
-  return (
-    <main>
-      <h1>Book a conversation</h1>
-      <p className="lede">{booking.session.description}</p>
-      <Suspense>
-        <BookingFlow />
-      </Suspense>
-    </main>
-  );
+export default function Page() {
+  return <BookingPage id="conversation" />;
 }

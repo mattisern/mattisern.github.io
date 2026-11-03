@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
 import type Stripe from "stripe";
-import { booking } from "@/lib/config.ts";
+import { getOffering, offerings } from "@/lib/config.ts";
 import { bookingProps, confirmBooking, deleteEvent, getEvent } from "@/lib/google.ts";
 import { stripe } from "@/lib/stripe.ts";
+import { clearAvailabilityCache } from "@/lib/booking.ts";
 
 export async function POST(req: Request) {
   let event: Stripe.Event;
@@ -42,11 +43,14 @@ export async function POST(req: Request) {
 async function confirm(session: Stripe.Checkout.Session) {
   const m = session.metadata ?? {};
   if (!m.start || !m.email) return; // not a booking checkout
+  // Checkouts started before offerings existed carry no offering; they were all conversations.
+  const offering = getOffering(m.offering) ?? { id: "conversation", ...offerings.conversation };
   const event = await confirmBooking({
     holdEventId: m.holdEventId,
     slot: { start: new Date(m.start), end: new Date(m.end) },
     client: { name: m.name, email: m.email },
-    title: booking.session.name,
+    title: offering.name,
+    offering: offering.id,
     stripeSession: session.id,
   });
   console.log(`[webhook] booked ${m.start} for ${m.email} (event ${event.id})`);
@@ -56,5 +60,8 @@ async function releaseHold(session: Stripe.Checkout.Session) {
   const id = session.metadata?.holdEventId;
   if (!id) return;
   const event = await getEvent(id);
-  if (event && bookingProps(event)?.status === "hold") await deleteEvent(id);
+  if (event && bookingProps(event)?.status === "hold") {
+    await deleteEvent(id);
+    clearAvailabilityCache();
+  }
 }

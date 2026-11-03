@@ -14,7 +14,12 @@ Run every command below from this `booking/` folder.
 
 ## Schedule and prices
 
-Edit `lib/config.ts`: session name, length, prices per currency, timezone, weekly start times, notice period and buffer. Push to the default branch and Netlify redeploys.
+Edit `lib/config.ts`. Push to the default branch and Netlify redeploys.
+
+- `offerings`: what can be booked, each with its own page:
+  - `/book`: the paid conversation, priced in EUR, USD and SEK.
+  - `/explore`: the free exploration call. Free bookings skip Stripe and confirm at once. Each email address can only have one upcoming exploration call.
+- `booking`: the length, timezone, weekly start times, notice period and buffer. These are shared by both offerings, so a time can only be booked once.
 
 ## Local development
 

@@ -2,22 +2,59 @@
 
 export type Weekday = "mon" | "tue" | "wed" | "thu" | "fri" | "sat" | "sun";
 
-export const booking = {
-  // The session clients are paying for.
-  session: {
-    name: "Conversation with Mattis",
-    description: "A 40-minute video conversation on Google Meet.",
-    durationMinutes: 40,
-  },
+export type Price = { currency: string; amount: number };
 
-  // Prices clients can choose between, in the smallest currency unit (cents / öre).
+export type Offering = {
+  // Booking page path on book.lightly.io.
+  path: string;
+  // Shown on the booking page, the Stripe receipt and the calendar invite.
+  name: string;
+  heading: string;
+  description: string;
+  // Label for the optional note field.
+  notePrompt: string;
+  // Prices clients can choose between, in the smallest currency unit (cents / öre):
   // 15000 = 150.00. Visitors on Swedish time default to SEK, on American time to USD,
-  // everyone else to the first one.
-  prices: [
-    { currency: "eur", amount: 15000 },
-    { currency: "usd", amount: 15000 },
-    { currency: "sek", amount: 150000 },
-  ],
+  // everyone else to the first one. No prices = free, booked without payment.
+  prices: Price[];
+};
+
+// What clients can book. Both share the schedule and calendar below, so a time can
+// only be taken once, by either.
+export const offerings = {
+  conversation: {
+    path: "/book",
+    name: "Conversation with Mattis",
+    heading: "Book a conversation",
+    description: "A 40-minute video conversation on Google Meet.",
+    notePrompt: "Anything you'd like me to know?",
+    prices: [
+      { currency: "eur", amount: 15000 },
+      { currency: "usd", amount: 15000 },
+      { currency: "sek", amount: 150000 },
+    ],
+  },
+  exploration: {
+    path: "/explore",
+    name: "Exploration call with Mattis",
+    heading: "Book an exploration call",
+    description:
+      "A free 40-minute video call on Google Meet, where we explore what your team needs and how we can work together.",
+    notePrompt: "Your organization, and what you'd like to explore",
+    prices: [],
+  },
+} satisfies Record<string, Offering>;
+
+export type OfferingId = keyof typeof offerings;
+
+export function getOffering(id: unknown): (Offering & { id: OfferingId }) | undefined {
+  return typeof id === "string" && Object.hasOwn(offerings, id)
+    ? { id: id as OfferingId, ...offerings[id as OfferingId] }
+    : undefined;
+}
+
+export const booking = {
+  durationMinutes: 40,
 
   // Your timezone. The weekly schedule below is in this timezone;
   // clients see times converted to their own.

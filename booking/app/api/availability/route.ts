@@ -4,12 +4,12 @@ import { availableSlots } from "@/lib/booking.ts";
 
 export const dynamic = "force-dynamic";
 
+// Every offering shares the same schedule and calendar, so there's one list of free slots.
 export async function GET() {
   try {
     const slots = await availableSlots();
     return NextResponse.json({
-      session: booking.session,
-      prices: booking.prices,
+      durationMinutes: booking.durationMinutes,
       slots: slots.map((s) => ({ start: s.start.toISOString(), end: s.end.toISOString() })),
     });
   } catch (e) {

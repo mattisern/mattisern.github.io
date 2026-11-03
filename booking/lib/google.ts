@@ -13,6 +13,7 @@ export type BookingProps = {
   clientEmail: string;
   holdExpires?: string;
   stripeSession?: string;
+  offering?: string;
 };
 
 export type CalendarEvent = {
@@ -102,6 +103,7 @@ export function bookingProps(event: CalendarEvent): BookingProps | undefined {
     clientEmail: p.clientEmail,
     holdExpires: p.holdExpires || undefined,
     stripeSession: p.stripeSession || undefined,
+    offering: p.offering || undefined,
   };
 }
 
@@ -142,13 +144,21 @@ export async function deleteEvent(id: string) {
   }
 }
 
-/** Block the slot while the client pays. Shows in your calendar as a busy "Hold" event. */
-export async function createHold(slot: Interval, client: { name: string; email: string; note: string }, holdExpires: Date) {
+/**
+ * Block the slot while the booking is completed (for paid bookings: while the client pays).
+ * Shows in your calendar as a busy "Hold" event.
+ */
+export async function createHold(
+  slot: Interval,
+  client: { name: string; email: string; note: string },
+  holdExpires: Date,
+  opts: { offering: string; paid: boolean },
+) {
   return gcal<CalendarEvent>(eventsPath(), {
     method: "POST",
     query: { sendUpdates: "none" },
     body: {
-      summary: `Hold: ${client.name} (awaiting payment)`,
+      summary: `Hold: ${client.name}${opts.paid ? " (awaiting payment)" : ""}`,
       description: client.note ? `Note from ${client.name}:\n${client.note}` : undefined,
       start: { dateTime: slot.start.toISOString() },
       end: { dateTime: slot.end.toISOString() },
@@ -158,6 +168,7 @@ export async function createHold(slot: Interval, client: { name: string; email: 
         clientName: client.name,
         clientEmail: client.email,
         holdExpires: holdExpires.toISOString(),
+        offering: opts.offering,
       }),
     },
   });
@@ -192,10 +203,13 @@ export async function confirmBooking(opts: {
   slot: Interval;
   client: { name: string; email: string };
   title: string;
-  stripeSession: string;
+  offering: string;
+  stripeSession?: string;
 }) {
   const existing = opts.holdEventId ? await getEvent(opts.holdEventId) : null;
   if (existing && bookingProps(existing)?.status === "confirmed") return existing;
+  // Google dedupes Meet creation on this id, so retries don't make a second Meet.
+  const requestId = opts.stripeSession ?? existing?.id ?? crypto.randomUUID();
 
   const body = {
     summary: `${opts.title} (${opts.client.name})`,
@@ -207,14 +221,15 @@ export async function confirmBooking(opts: {
     guestsCanInviteOthers: false,
     guestsCanSeeOtherGuests: false,
     conferenceData: {
-      createRequest: { requestId: opts.stripeSession, conferenceSolutionKey: { type: "hangoutsMeet" } },
+      createRequest: { requestId, conferenceSolutionKey: { type: "hangoutsMeet" } },
     },
     extendedProperties: privateProps({
       status: "confirmed",
       clientName: opts.client.name,
       clientEmail: opts.client.email,
       holdExpires: "",
-      stripeSession: opts.stripeSession,
+      stripeSession: opts.stripeSession ?? "",
+      offering: opts.offering,
     }),
   };
   const query = { conferenceDataVersion: "1", sendUpdates: "all" };

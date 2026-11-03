@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { bookingProps, deleteEvent, getEvent } from "@/lib/google.ts";
 import { stripe } from "@/lib/stripe.ts";
+import { clearAvailabilityCache } from "@/lib/booking.ts";
 
 // Called when a client backs out of Stripe Checkout, so the slot frees up straight away
 // instead of after the checkout window expires.
@@ -19,6 +20,7 @@ export async function POST(req: Request) {
       if (session.status === "open") await stripe().checkout.sessions.expire(session.id);
     }
     await deleteEvent(event.id);
+    clearAvailabilityCache();
   } catch (e) {
     console.error("[release]", e);
   }

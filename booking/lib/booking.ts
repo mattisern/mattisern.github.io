@@ -3,7 +3,20 @@ import { candidateSlots, freeSlots, type Interval } from "./slots.ts";
 import { bookingProps, busyIntervals, deleteEvent, googleConfigured, listBookings } from "./google.ts";
 import { stripe } from "./stripe.ts";
 
-const rules = { ...booking, durationMinutes: booking.session.durationMinutes };
+const rules = booking;
+
+/**
+ * The client's upcoming booking of this kind, if any. Free bookings are limited to one
+ * per email address at a time, so a script can't fill the calendar with fake calls.
+ */
+export async function upcomingBooking(email: string, offering: string, now = new Date()) {
+  const until = new Date(now.getTime() + (booking.bookingWindowDays + 1) * 86_400_000);
+  const events = await listBookings(now, until);
+  return events.find((e) => {
+    const p = bookingProps(e);
+    return p?.offering === offering && p.clientEmail.toLowerCase() === email.toLowerCase();
+  });
+}
 
 /** The schedule's slot that starts at `startIso`, if it's currently bookable by the rules. */
 export function findSlot(startIso: string, now = new Date()): Interval | undefined {
@@ -11,8 +24,27 @@ export function findSlot(startIso: string, now = new Date()): Interval | undefin
   return candidateSlots(now, rules).find((s) => s.start.getTime() === start);
 }
 
+// Free slots are reused for a few seconds, so a burst of page loads (many visitors, or a
+// page stuck reloading) can't use up the Google Calendar quota of 600 requests a minute.
+// Bookings always re-check the calendar live (slotIsFree), so this can't cause double bookings.
+const CACHE_MS = 15_000;
+let cached: { at: number; slots: Interval[] } | undefined;
+
+export function clearAvailabilityCache() {
+  cached = undefined;
+}
+
 /** Slots that are offered by the schedule and free in the calendar. */
 export async function availableSlots(now = new Date()) {
+  if (cached && now.getTime() - cached.at < CACHE_MS) {
+    return cached.slots.filter((s) => findSlot(s.start.toISOString(), now));
+  }
+  const slots = await fetchAvailableSlots(now);
+  cached = { at: now.getTime(), slots };
+  return slots;
+}
+
+async function fetchAvailableSlots(now: Date) {
   const slots = candidateSlots(now, rules);
   if (!slots.length) return [];
   if (!googleConfigured()) {

@@ -5,11 +5,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 type Slot = { start: string; end: string };
 type Price = { amount: number; currency: string };
-type Availability = {
-  session: { name: string; durationMinutes: number };
-  prices: Price[];
-  slots: Slot[];
-};
+type Availability = { durationMinutes: number; slots: Slot[] };
+type Offering = { id: string; path: string; prices: Price[]; notePrompt: string };
 
 // en-CA formats dates as YYYY-MM-DD, which makes a handy grouping key in the visitor's timezone.
 const dayKey = (iso: string) => new Date(iso).toLocaleDateString("en-CA");
@@ -31,7 +28,16 @@ function defaultCurrency(prices: Price[]) {
   return prices.find((p) => p.currency === guess)?.currency ?? prices[0]?.currency;
 }
 
-export default function BookingFlow() {
+const longDate = (iso: string) =>
+  new Date(iso).toLocaleString(undefined, {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    hour: "numeric",
+    minute: "2-digit",
+  });
+
+export default function BookingFlow({ offering }: { offering: Offering }) {
   const router = useRouter();
   const params = useSearchParams();
   const [data, setData] = useState<Availability>();
@@ -41,6 +47,8 @@ export default function BookingFlow() {
   const [currency, setCurrency] = useState<string>();
   const [submitting, setSubmitting] = useState(false);
   const [formError, setFormError] = useState<string>();
+  const [confirmed, setConfirmed] = useState<{ start: string; email: string }>();
+  const free = offering.prices.length === 0;
 
   const timeZone = useMemo(() => Intl.DateTimeFormat().resolvedOptions().timeZone, []);
 
@@ -51,7 +59,8 @@ export default function BookingFlow() {
       const json = await res.json();
       if (!res.ok) throw new Error(json.error);
       setData(json);
-      setCurrency((c) => c ?? defaultCurrency(json.prices));
+      // Guessed here, in the browser: the server doesn't know the visitor's timezone.
+      setCurrency((c) => c ?? defaultCurrency(offering.prices));
     } catch (e) {
       setLoadError(e instanceof Error && e.message ? e.message : "Couldn't load available times.");
     }
@@ -63,7 +72,7 @@ export default function BookingFlow() {
     (async () => {
       if (release) {
         await fetch("/api/release", { method: "POST", body: JSON.stringify({ holdId: release }) }).catch(() => {});
-        router.replace("/book");
+        router.replace(offering.path);
       }
       await load();
     })();
@@ -82,8 +91,8 @@ export default function BookingFlow() {
 
   const daySlots = days.find(([key]) => key === day)?.[1] ?? [];
 
-  const selectedPrice = data?.prices.find((p) => p.currency === currency);
-  const price = selectedPrice ? formatPrice(selectedPrice) : "";
+  const selectedPrice = offering.prices.find((p) => p.currency === currency);
+  const price = free ? "Free" : selectedPrice ? formatPrice(selectedPrice) : "";
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -96,11 +105,13 @@ export default function BookingFlow() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          offering: offering.id,
           start: slot.start,
           currency,
           name: form.get("name"),
           email: form.get("email"),
           note: form.get("note"),
+          website: form.get("website"),
         }),
       });
       const json = await res.json();
@@ -111,6 +122,11 @@ export default function BookingFlow() {
           await load();
         }
         setSubmitting(false);
+        return;
+      }
+      if (json.confirmed) {
+        setConfirmed(json.confirmed);
+        window.scrollTo({ top: 0, behavior: "smooth" });
         return;
       }
       window.location.href = json.url;
@@ -131,6 +147,20 @@ export default function BookingFlow() {
     );
   }
 
+  if (confirmed) {
+    return (
+      <div className="card">
+        <p className="step-label">You're booked</p>
+        <p style={{ margin: 0, fontSize: "1.1rem" }}>{longDate(confirmed.start)}</p>
+        <hr className="divider" />
+        <p style={{ margin: 0 }}>
+          A calendar invite with the Google Meet link is on its way to <strong>{confirmed.email}</strong>. If it
+          hasn't arrived in a few minutes, check your spam folder.
+        </p>
+      </div>
+    );
+  }
+
   if (!data) {
     return (
       <div className="card">
@@ -142,9 +172,9 @@ export default function BookingFlow() {
   return (
     <>
       <div className="meta">
-        <span>{data.session.durationMinutes} minutes</span>
+        <span>{data.durationMinutes} minutes</span>
         <span>Google Meet</span>
-        <span>{data.prices.map(formatPrice).join(" / ")}</span>
+        <span>{free ? "Free" : offering.prices.map(formatPrice).join(" / ")}</span>
       </div>
 
       <div className="card">
@@ -201,15 +231,7 @@ export default function BookingFlow() {
             <p className="step-label">3. Your details</p>
             <form onSubmit={submit}>
               <div className="summary">
-                {new Date(slot.start).toLocaleString(undefined, {
-                  weekday: "long",
-                  day: "numeric",
-                  month: "long",
-                  hour: "numeric",
-                  minute: "2-digit",
-                })}
-                {" · "}
-                {data.session.durationMinutes} min · {price}
+                {longDate(slot.start)} · {data.durationMinutes} min · {price}
               </div>
               <label>
                 Name
@@ -221,14 +243,16 @@ export default function BookingFlow() {
               </label>
               <label>
                 <span>
-                  Anything you'd like me to know? <span className="optional">(optional)</span>
+                  {offering.notePrompt} <span className="optional">(optional)</span>
                 </span>
                 <textarea name="note" maxLength={1000} />
               </label>
-              {data.prices.length > 1 && (
+              {/* Spam trap: hidden from people, but bots fill it in. */}
+              <input name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="trap" />
+              {offering.prices.length > 1 && (
                 <div role="radiogroup" aria-label="Currency" className="currency">
                   <span>Pay in</span>
-                  {data.prices.map((p) => (
+                  {offering.prices.map((p) => (
                     <button
                       key={p.currency}
                       type="button"
@@ -245,11 +269,18 @@ export default function BookingFlow() {
               )}
               {formError && <p className="error">{formError}</p>}
               <button className="button" disabled={submitting}>
-                {submitting ? "Opening payment…" : `Continue to payment · ${price}`}
+                {free
+                  ? submitting
+                    ? "Booking…"
+                    : "Book this time"
+                  : submitting
+                    ? "Opening payment…"
+                    : `Continue to payment · ${price}`}
               </button>
               <p className="hint">
-                The time is held for you for 30 minutes while you pay. Your calendar invite with a Google Meet link
-                arrives by email as soon as payment goes through.
+                {free
+                  ? "You'll get a calendar invite with a Google Meet link by email straight away."
+                  : "The time is held for you for 30 minutes while you pay. Your calendar invite with a Google Meet link arrives by email as soon as payment goes through."}
               </p>
             </form>
           </>
