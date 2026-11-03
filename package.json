@@ -1,0 +1,7 @@
+{
+  "name": "lightly-io",
+  "private": true,
+  "scripts": {
+    "dev": "node tools/dev.mjs"
+  }
+}

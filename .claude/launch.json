@@ -1,6 +1,7 @@
 {
   "version": "0.0.1",
   "configurations": [
-    { "name": "booking", "runtimeExecutable": "npm", "runtimeArgs": ["--prefix", "booking", "run", "dev"], "port": 3000 }
+    { "name": "site", "runtimeExecutable": "node", "runtimeArgs": ["tools/preview.mjs"], "port": 4000 },
+    { "name": "booking", "runtimeExecutable": "npm", "runtimeArgs": ["--prefix", "booking", "run", "dev", "--", "--port", "3000"], "port": 3000 }
   ]
 }

@@ -1,5 +1,9 @@
-# GitHub Pages builds lightly.io from this repo. The booking app in booking/
-# is deployed separately (Netlify, book.lightly.io), so keep it off the site.
+# GitHub Pages builds lightly.io from this repo. Keep everything that isn't part of
+# the public site out of it: the booking app (deployed separately to book.lightly.io
+# by Netlify) and the local development tools.
 exclude:
   - booking
   - netlify.toml
+  - tools
+  - package.json
+  - README.md
