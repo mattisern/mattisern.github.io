@@ -1,9 +1,11 @@
 # GitHub Pages builds lightly.io from this repo. Keep everything that isn't part of
 # the public site out of it: the booking app (deployed separately to book.lightly.io
 # by Netlify) and the local development tools.
+# Folders end in "/": a bare "booking" would also hide booking.css (Jekyll matches
+# any path starting with the pattern).
 exclude:
-  - booking
+  - booking/
+  - tools/
   - netlify.toml
-  - tools
   - package.json
   - README.md
