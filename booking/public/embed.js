@@ -3,6 +3,9 @@
 //   <div id="book" data-lightly-booking="conversation">…fallback link…</div>
 //   <script src="https://book.lightly.io/embed.js" defer></script>
 //
+// List several offerings ("exploration conversation") to get a switch between them;
+// the first is selected to begin with.
+//
 // It replaces the element's contents with the booking flow (days → times → details),
 // talking to the booking API on the origin this script was loaded from. Paid bookings go
 // to Stripe and come back to the same page with ?lb_session=… (or ?lb_release=… if the
@@ -15,9 +18,11 @@
   const params = new URLSearchParams(location.search);
   const returnedSession = params.get("lb_session");
   const releaseHold = params.get("lb_release");
-  if (returnedSession || releaseHold) {
+  const returnedOffering = params.get("lb_offering");
+  if (returnedSession || releaseHold || returnedOffering) {
     params.delete("lb_session");
     params.delete("lb_release");
+    params.delete("lb_offering");
     const query = params.toString();
     history.replaceState(null, "", location.pathname + (query ? `?${query}` : "") + location.hash);
   }
@@ -26,12 +31,18 @@
     ? api("/api/release", { holdId: releaseHold }).catch(() => {})
     : Promise.resolve();
 
-  document.querySelectorAll("[data-lightly-booking]").forEach((el, i) => {
-    mount(el, el.dataset.lightlyBooking, i === 0 ? returnedSession : null);
+  // Clients coming back from Stripe land on #book, so that widget shows the result.
+  const mounts = [...document.querySelectorAll("[data-lightly-booking]")];
+  const returnTarget = mounts.find((el) => el.id === "book") || mounts[0];
+  mounts.forEach((el) => {
+    const ids = el.dataset.lightlyBooking.split(/\s+/).filter(Boolean);
+    mount(el, ids, el === returnTarget ? returnedSession : null);
   });
 
-  function mount(root, offeringId, sessionId) {
+  function mount(root, offeringIds, sessionId) {
     const state = {
+      offeringId: offeringIds.includes(returnedOffering) ? returnedOffering : offeringIds[0],
+      offerings: {},
       data: null,
       loadError: null,
       day: null,
@@ -50,10 +61,16 @@
     async function load() {
       set({ loadError: null });
       try {
-        const data = await api(`/api/availability?offering=${encodeURIComponent(offeringId)}`);
+        // Every offering shares the same free times; each response also carries its details.
+        const responses = await Promise.all(
+          offeringIds.map((id) => api(`/api/availability?offering=${encodeURIComponent(id)}`)),
+        );
+        const offerings = Object.fromEntries(responses.map((r) => [r.offering.id, r.offering]));
+        const data = responses[0];
         const days = groupByDay(data.slots);
         const day = days.some(([key]) => key === state.day) ? state.day : days[0]?.[0] ?? null;
-        set({ data, day, currency: state.currency ?? defaultCurrency(data.offering.prices) });
+        const prices = Object.values(offerings).flatMap((o) => o.prices);
+        set({ data, offerings, day, currency: state.currency ?? defaultCurrency(prices) });
       } catch (e) {
         set({ loadError: e.message || "Couldn't load available times." });
       }
@@ -65,7 +82,7 @@
       set({ submitting: true, formError: null });
       try {
         const res = await api("/api/checkout", {
-          offering: offeringId,
+          offering: state.offeringId,
           start: state.slot.start,
           currency: state.currency,
           ...state.form,
@@ -124,9 +141,10 @@
 
       if (!data) return h("div", { class: "lb-card" }, h("p", { class: "lb-hint" }, "Loading available times…"));
 
-      const { offering, durationMinutes } = data;
+      const { durationMinutes } = data;
+      const offering = state.offerings[state.offeringId];
       const free = offering.prices.length === 0;
-      const selected = offering.prices.find((p) => p.currency === state.currency);
+      const selected = offering.prices.find((p) => p.currency === state.currency) || offering.prices[0];
       const price = free ? "Free" : selected ? formatPrice(selected) : "";
       const days = groupByDay(data.slots);
       const daySlots = days.find(([key]) => key === state.day)?.[1] ?? [];
@@ -134,6 +152,25 @@
       return h(
         "div",
         { class: "lb-card" },
+        offeringIds.length > 1 &&
+          h(
+            "div",
+            { class: "lb-switch", role: "radiogroup", "aria-label": "What to book" },
+            offeringIds.map((id) =>
+              h(
+                "button",
+                {
+                  type: "button",
+                  role: "radio",
+                  class: "lb-tab",
+                  "aria-checked": String(id === state.offeringId),
+                  "aria-pressed": String(id === state.offeringId),
+                  onclick: () => set({ offeringId: id, formError: null }),
+                },
+                state.offerings[id].label,
+              ),
+            ),
+          ),
         h(
           "p",
           { class: "lb-meta" },

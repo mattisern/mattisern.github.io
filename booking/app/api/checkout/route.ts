@@ -90,7 +90,7 @@ export async function POST(req: Request) {
         metadata,
         payment_intent_data: { description: `${offering.name}, ${when}`, metadata },
         expires_at: Math.floor(expiresAt.getTime() / 1000),
-        ...returnUrls(body.returnUrl, offering.path, hold.id),
+        ...returnUrls(body.returnUrl, offering.path, hold.id, offering.id),
       });
       await setHoldStripeSession(hold, session.id);
       return NextResponse.json({ url: session.url });
@@ -110,9 +110,10 @@ export async function POST(req: Request) {
 /**
  * Where Stripe sends the client afterwards. Bookings made through the widget on
  * lightly.io go back to that page (only pages on returnOrigins, so this can't be used
- * to redirect people elsewhere); the widget reads lb_session / lb_release from the URL.
+ * to redirect people elsewhere); the widget reads lb_session / lb_release from the URL,
+ * and lb_offering to reopen on the same kind of booking.
  */
-function returnUrls(raw: unknown, path: string, holdId: string) {
+function returnUrls(raw: unknown, path: string, holdId: string, offeringId: string) {
   let page: URL | undefined;
   try {
     const u = new URL(String(raw));
@@ -128,7 +129,8 @@ function returnUrls(raw: unknown, path: string, holdId: string) {
   page.hash = "";
   page.searchParams.delete("lb_session");
   page.searchParams.delete("lb_release");
-  const base = page.toString() + (page.search ? "&" : "?");
+  page.searchParams.set("lb_offering", offeringId);
+  const base = `${page.toString()}&`;
   return {
     // Stripe fills in {CHECKOUT_SESSION_ID}; it must stay unencoded.
     success_url: `${base}lb_session={CHECKOUT_SESSION_ID}#book`,

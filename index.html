@@ -3,57 +3,283 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="One-on-one conversations on psychology, spirituality, creativity and business, and coaching and workshops for teams. Trusted by Spotify, Klarna and Ericsson.">
-  <meta name="keywords" content="Mattis Erngren, coach, personal coaching, spiritual coaching, creativity coaching, psychology, workshop leader, team coaching, leadership development, authentic expression, personal development" />
+  <meta name="description" content="High-trust coaching and workshops for individuals and teams ready to work beneath the surface. Trusted by Spotify, Klarna, PayPal.">
+  <meta name="keywords" content="Mattis Erngren, coach, workshop leader, team coaching, leadership development, authentic expression, personal development" />
   <meta property="og:title" content="Mattis Erngren - Inner Work → Outer Impact" />
   <meta property="og:url" content="https://mattisern.github.io/" />
   <meta property="og:type" content="website" />
-  <meta property="og:description" content="One-on-one conversations on psychology, spirituality, creativity and business, and coaching and workshops for teams ready to grow from the inside out." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <meta property="og:description" content="Coaching and workshops for individuals and teams ready to grow from the inside out. Real conversations that change people — and what they create." />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
   <title>Mattis Erngren, Lightly | Inner Work → Outer Impact</title>
+  <link rel="stylesheet" href="booking.css" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary-color: #54b3a5;
+      --text-color: #fff;
+      --heading-color: #aaa;
+      --link-color: #ccc;
+      --background-color: #000;
+      --max-width: 600px;
+    }
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+    }
+    html, body {
+      overflow-x: hidden;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      font-family: "Crimson Text", serif;
+      font-weight: 400;
+      line-height: 1.5;
+      width: 100%;
+    }
+    body { padding: 0 1rem; }
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    h1, h2, h3 {
+      color: var(--heading-color);
+      font-family: "Crimson Text", serif;
+      font-weight: 300;
+      font-style: italic;
+      border-bottom: 1px solid var(--heading-color);
+      padding-top: 2rem;
+      margin: 2rem 0 1rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.02rem;
+      text-align: right;
+    }
+    h2 {
+      text-align: center;
+      font-size: 1.4rem;
+      border-bottom: none;
+      margin-top: 4rem;
+      margin-bottom: 0;
+    }
+    h3 {
+      margin-top: 4rem;
+      letter-spacing: 0.03rem;
+    }
+    p {
+  
+      font-size: 1.6rem;
+  line-height: 1.5;
+      margin: 0.5rem 0;
+    }
+    p#star {
+      font-size: 1rem;
+      color: var(--link-color);
+      text-align: center;
+      margin: 3rem 0 2rem;
+    }
+    a {
+  color: #9ed4cb;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+  a:hover {
+    color: var(--primary-color);
+    text-decoration-thickness: 2px;
+}
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 1.2rem;
+      margin: 1rem 0;
+    }
+    td {
+      padding: 0.5rem 0;
+    }
+
+    ul {
+      padding-left: 3rem;
+    }
+    li {
+      color: var(--text-color);
+      font-size: 1.6rem;
+      font-weight: 200;
+      position: relative;
+    }
+    li::before {
+      color: var(--heading-color);
+      position: absolute;
+    }
+    button {
+      background-color: var(--primary-color);
+      color: var(--text-color);
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 5px;
+      font-family: "Crimson Text", serif;
+      font-size: 1.2rem;
+      font-style: italic;
+      margin-top: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    button:hover {
+      background-color: #48a093;
+      transform: translateY(-2px);
+    }
+    button:active {
+      transform: translateY(0);
+    }
+    img.forest {
+      width: 100%;
+      border-radius: 12px; 
+      margin-top: 2rem;
+    }
+    img.mattis {
+      display: block;
+      max-width: 300px;
+      width: 100%;
+      margin: 2rem auto;
+      border-radius: 4px;
+      object-fit: cover;
+      object-position: top;
+    }
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      will-change: opacity, transform;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .soft-underline {
+  text-decoration-line: underline;
+  text-decoration-color: var(--primary-color);    /* light opacity */
+  text-decoration-thickness: 2px;                   /* a bit thicker */
+  text-underline-offset: 3px;                       /* space from text */
+  text-decoration-skip-ink: auto;                   /* avoids descenders */
+}
+.testimonial-block {
+  background-color: #111;
+  border-left: 4px solid var(--primary-color);
+  padding: 1.5rem;
+  margin: 2rem 0;
+  font-size: 1.6rem;
+  font-style: italic;
+  color: #ddd;
+}
+
+.testimonial-block span {
+  display: block;
+  font-size: 1.2rem;
+  font-style: normal;
+  opacity: 0.6;
+  margin-top: 1rem;
+}
+
+    @media screen and (max-width: 768px) {
+      html { font-size: 14px; }
+      h1 { margin-top: 1rem; }
+      .container { padding: 0 1rem; }
+      p { font-size: 1.4rem; }
+      h1, h3 {
+  text-align: center;
+}
+    }
+    @media screen and (max-width: 480px) {
+      html { font-size: 12px; }
+      h1 { margin-top: 2rem; }
+      h1, h2, h3 { padding-top: 1.5rem; }
+      p, li { font-size: 1.8rem; }
+      img.mattis {
+    max-width: 160px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2rem;
+    margin-bottom: 0rem;
+  }
+}
+  
+  </style>
 </head>
 <body>
   <div class="container">
     <h1>Mattis Erngren</h1>
     <p class="fade-in">
-      Hello. My name is Mattis. Through my practice <span style="color:#54b3a5;">Lightly</span> I help individuals and teams express their authentic self, reach their highest potential and create something that makes the world better.
-    </p>
-    <p class="fade-in">
-      I meet individuals in one-on-one conversations about psychology, spirituality, creativity and business. And I work with organizations through team coaching, workshops and leadership development.
-    </p>
+      Hello. My name is Mattis. Through my practice <span style="color:#54b3a5;">Lightly</span> I help individuals and teams express their authentic self, reach their highest potential and create something that makes the world better. </p>
 
     <img src="mattis.png" alt="Mattis Erngren" class="fade-in mattis" />
+    
+    <h2 class="fade-in"><span style="font-style: italic;">Clients</span></h2>
+    <p class="fade-in">Trusted by teams & leaders at Spotify, Klarna, PayPal/iZettle, GE Healthcare, 3, Ericsson — and over 40 other organizations.</p>
+    <p class="fade-in">Clients include CEOs and executives, including those of companies generating up to $100M in annual revenue.</p>
+          <p class="fade-in">From Boston to Brighton, Stockholm to Palo Alto — I've worked wherever I'm needed, in person or remote.</p>
 
-    <p class="fade-in small-note">Trusted by leaders and teams at Spotify, Klarna, Ericsson and over 40 other organizations.</p>
-
-    <nav class="doors fade-in" aria-label="Choose your path">
-      <a href="individuals.html" class="door">
-        <span class="door-title">For individuals</span>
-        <span class="door-text">Conversations on psychology, spirituality, creativity and business.</span>
-        <span class="door-arrow">→</span>
-      </a>
-      <a href="teams.html" class="door">
-        <span class="door-title">For teams &amp; organizations</span>
-        <span class="door-text">Team coaching, workshops and leadership development.</span>
-        <span class="door-arrow">→</span>
-      </a>
-    </nav>
-
-    <h2 class="fade-in">Direction</h2>
+    <h2 class="fade-in" style="font-style: italic;">Direction</h2>
     <p class="fade-in">
       Whether I'm working with individuals or teams, the goal is the same: to enable our full potential, get clarity on our vision, and the courage and structure to act on it. My approach blends practical coaching with deep transformational work, drawing on psychology and wisdom traditions.
-    </p>
+  </p>
+
+    <h2 class="fade-in" style="font-style: italic;">Words from clients</h2>
+<p class="testimonial-block fade-in" style="opacity: 0.8; font-size: 1.8rem; margin-bottom: 2rem;">
+  "A+++ presentation and highly recommended!"<br />
+  <span style="font-size: 1.4rem; opacity: 0.6;">— Product manager, Spotify</span>
+</p>
+
+<p class="testimonial-block fade-in" style="opacity: 0.8; font-size: 1.8rem; margin-bottom: 2rem;">
+  “Mattis is a joy listening to! With a very personal and easy way he gives both the tools and motivation to improve productivity and reduce stress.”<br />
+  <span style="font-size: 1.4rem; opacity: 0.6;">— Clinical leader, GE Healthcare</span>
+</p>
+
+<p class="testimonial-block fade-in" style="opacity: 0.8; font-size: 1.8rem; margin-bottom: 2rem;">
+  Working with Mattis didn't feel like 'therapy' in the traditional sense, it was something much deeper, more fluid, and infinitely more transformative. He helped me rediscover what I love, not from a place of scarcity or self-criticism, but from a sense of abundance, wonder, and trust.
+<span style="font-size: 1.4rem; opacity: 0.6;">— CEO, entrepreneur</span>
+</p>
+
+<p class="fade-in" style="font-size: 1.4rem; opacity: 0.7; text-align: center; margin-top: 2rem;">
+  Curious for more? <a href="https://www.linkedin.com/in/mattiserngren/" target="_blank">See additional testimonials on LinkedIn</a>.
+  </p>
+
+
+    <h3 class="fade-in">Start your path</h3>
+    <p class="fade-in">
+        I’d be happy to help you or your team out with:
+        </p>
+<ul>
+<li>Clarity on your purpose and direction</li>
+<li>Problem solving</li>
+<li>Organizational challenges</li>
+<li>Leadership development</li>
+<li>Well-being & spiritual practices</li>
+<li>Innovation & creativity</li>
+<li>Processes that enable flow</li>
+</ul>
+<p>Book a free first meeting below, where we explore how we can collaborate. Or, if you already know you want to work with me, book a 1:1 conversation directly.</p>
+    <div id="book" data-lightly-booking="exploration conversation">
+      <p style="text-align: center;"><a href="https://book.lightly.io/explore"><button>Book an exploration call</button></a></p>
+    </div>
+<p>
+  <img src="forest-dark.jpg" class="forest" alt="A dark forest path representing the inner journey."/>
+</p>
+
+<h3 class="fade-in">For deeper transformation</h3>
+<p class="fade-in">
+  For those committed to foundational change, I offer a 4-month immersive program. It's an intensive journey combining 1:1 coaching, esoteric wisdom, and a dedicated support network. This path is for those truly ready to explore their depths.
+</p>
+<p class="fade-in">
+  If this calls to you, <a href="mailto:mattis.erngren@gmail.com">email me</a> to see if we're a fit.
+</p>
+
 
     <h2 style="font-style: normal" class="fade-in">The Lightly Values</h2>
     <p class="fade-in" style="text-align: center; color:#54b3a5;"><span style="font-style: italic;">Presence, authenticity, co-creation</span></p>
     <p class="fade-in" style="text-align: center; font-size: 80%;">Lightly is the art of moving with clarity and ease -<br />the effortless unfolding of truth, beauty, and service.</p>
 
     <h3 class="fade-in">Elsewhere</h3>
-    <p>I dedicate most of my time to the Great Work.
-      <a href="http://www.dmtpod.se">Reading</a>, <a href="https://www.adlibris.com/se/bok/gudar-ruttna-har-9781387337750">writing</a>, <a href="https://open.spotify.com/playlist/0O6SHGGx6t0HJD5l1lLpj6?si=7aa4007c3261448c">creating</a>,
+    <p>I dedicate most of my time to the Great Work. 
+      <a href="http://www.dmtpod.se">Reading</a>, <a href="https://www.adlibris.com/se/bok/gudar-ruttna-har-9781387337750">writing</a>, <a href="https://open.spotify.com/playlist/0O6SHGGx6t0HJD5l1lLpj6?si=7aa4007c3261448c">creating</a>, 
       general practicing. My next project is building a cabin in the woods.</p>
     <p id="star" class="fade-in">✶</p>
   </div>
@@ -72,5 +298,9 @@
     }, { threshold: 0.1 });
     elements.forEach(el => observer.observe(el));
   </script>
+  <script src="https://book.lightly.io/embed.js" defer></script>
+
+
+
 </body>
 </html>

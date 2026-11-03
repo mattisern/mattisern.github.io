@@ -12,7 +12,7 @@ There's no database. Your Google Calendar holds the bookings:
 
 ## On lightly.io
 
-`individuals.html` and `teams.html` show the booking flow right on the page. Each has a `<div id="book" data-lightly-booking="conversation">` (or `"exploration"`) plus `<script src="https://book.lightly.io/embed.js" defer>`. The script is `public/embed.js` and its styles are the `.lb-*` rules in the site's `style.css`. Paid bookings return to the same page after Stripe. Only origins listed in `returnOrigins` in `lib/config.ts` are allowed as return pages. The standalone pages `/book` and `/explore` on book.lightly.io still work too.
+The front page (`index.html`, under "Start your path") shows the booking flow right on the page. It uses `<div id="book" data-lightly-booking="exploration conversation">` plus `<script src="https://book.lightly.io/embed.js" defer>`. Listing two offerings gives a switch between them; the first one listed is selected to begin with. The script is `public/embed.js`, and its styles are in the site's `booking.css`. Paid bookings return to the same page after Stripe. Only origins listed in `returnOrigins` in `lib/config.ts` are allowed as return pages. The standalone pages `/book` and `/explore` on book.lightly.io still work too.
 
 Run every command below from this `booking/` folder.
 

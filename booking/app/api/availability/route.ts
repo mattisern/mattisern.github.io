@@ -19,6 +19,7 @@ export async function GET(req: Request) {
         id: offering.id,
         name: offering.name,
         prices: offering.prices,
+        label: offering.label,
         notePrompt: offering.notePrompt,
       },
       slots: slots.map((s) => ({ start: s.start.toISOString(), end: s.end.toISOString() })),

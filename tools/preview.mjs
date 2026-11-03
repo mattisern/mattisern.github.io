@@ -27,7 +27,7 @@ const TYPES = {
 createServer(async (req, res) => {
   let path = normalize(decodeURIComponent(new URL(req.url, "http://x").pathname));
   // Never serve the booking app's source or anything outside the repo.
-  if (path.startsWith("/booking") || path.includes("..")) return notFound(res);
+  if (path === "/booking" || path.startsWith("/booking/") || path.includes("..")) return notFound(res);
 
   let file = join(ROOT, path);
   try {

@@ -7,6 +7,8 @@ export type Price = { currency: string; amount: number };
 export type Offering = {
   // Booking page path on book.lightly.io.
   path: string;
+  // Short name for the switch when one widget offers several kinds of booking.
+  label: string;
   // Shown on the booking page, the Stripe receipt and the calendar invite.
   name: string;
   heading: string;
@@ -24,6 +26,7 @@ export type Offering = {
 export const offerings = {
   conversation: {
     path: "/book",
+    label: "1:1 conversation",
     name: "Conversation with Mattis",
     heading: "Book a conversation",
     description: "A 40-minute video conversation on Google Meet.",
@@ -36,11 +39,12 @@ export const offerings = {
   },
   exploration: {
     path: "/explore",
+    label: "Exploration call",
     name: "Exploration call with Mattis",
     heading: "Book an exploration call",
     description:
       "A free 40-minute video call on Google Meet, where we explore what your team needs and how we can work together.",
-    notePrompt: "Your organization, and what you'd like to explore",
+    notePrompt: "What would you like to explore?",
     prices: [],
   },
 } satisfies Record<string, Offering>;
