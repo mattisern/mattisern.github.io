@@ -54,10 +54,10 @@
     </p>
 
     <p class="fade-in">
-      Please use the button below to book a first meeting, where we explore what your team needs and how we can work together.
+      Pick a time below to book a free first meeting, where we explore what your team needs and how we can work together.
     </p>
-    <div style="text-align: center;" class="fade-in">
-      <a href="https://book.lightly.io/explore"><button>Book an exploration call</button></a>
+    <div id="book" data-lightly-booking="exploration">
+      <p style="text-align: center;"><a href="https://book.lightly.io/explore"><button>Book an exploration call</button></a></p>
     </div>
 
     <p class="fade-in small-note" style="margin-top: 4rem;">
@@ -80,5 +80,6 @@
     }, { threshold: 0.1 });
     elements.forEach(el => observer.observe(el));
   </script>
+  <script src="https://book.lightly.io/embed.js" defer></script>
 </body>
 </html>

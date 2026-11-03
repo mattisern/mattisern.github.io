@@ -47,6 +47,10 @@ export const offerings = {
 
 export type OfferingId = keyof typeof offerings;
 
+// Pages that embed the booking widget and may receive clients back after payment.
+// book.lightly.io itself (SITE_URL) is always allowed.
+export const returnOrigins = ["https://lightly.io", "https://www.lightly.io", "http://localhost:4000"];
+
 export function getOffering(id: unknown): (Offering & { id: OfferingId }) | undefined {
   return typeof id === "string" && Object.hasOwn(offerings, id)
     ? { id: id as OfferingId, ...offerings[id as OfferingId] }

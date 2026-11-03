@@ -34,10 +34,10 @@
       <li>Well-being, ease and presence</li>
     </ul>
     <p class="fade-in">
-      Each conversation is a space to think out loud, see more clearly and leave with something you can act on. You can book a session directly here.
+      Each conversation is a space to think out loud, see more clearly and leave with something you can act on. Pick a time below to book one.
     </p>
-    <div style="text-align: center;" class="fade-in">
-      <a href="https://book.lightly.io/book" id="book-session"><button>Book a conversation</button></a>
+    <div id="book" data-lightly-booking="conversation">
+      <p style="text-align: center;"><a href="https://book.lightly.io/book"><button>Book a conversation</button></a></p>
     </div>
 
     <h3 class="fade-in">Words from clients</h3>
@@ -83,5 +83,6 @@
     }, { threshold: 0.1 });
     elements.forEach(el => observer.observe(el));
   </script>
+  <script src="https://book.lightly.io/embed.js" defer></script>
 </body>
 </html>

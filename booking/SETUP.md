@@ -10,6 +10,10 @@ There's no database. Your Google Calendar holds the bookings:
 2. **Payment succeeds.** Stripe's webhook turns the hold into `Conversation with Mattis (<name>)`. The event gets a Google Meet link, the client is added as a guest, and Google emails them the invite.
 3. **Client backs out, or doesn't pay within ~30 minutes.** The hold is deleted and the slot opens again.
 
+## On lightly.io
+
+`individuals.html` and `teams.html` show the booking flow right on the page. Each has a `<div id="book" data-lightly-booking="conversation">` (or `"exploration"`) plus `<script src="https://book.lightly.io/embed.js" defer>`. The script is `public/embed.js` and its styles are the `.lb-*` rules in the site's `style.css`. Paid bookings return to the same page after Stripe. Only origins listed in `returnOrigins` in `lib/config.ts` are allowed as return pages. The standalone pages `/book` and `/explore` on book.lightly.io still work too.
+
 Run every command below from this `booking/` folder.
 
 ## Schedule and prices

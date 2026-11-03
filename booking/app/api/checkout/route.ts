@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { DateTime } from "luxon";
-import { booking, getOffering } from "@/lib/config.ts";
+import { booking, getOffering, returnOrigins } from "@/lib/config.ts";
 import { clearAvailabilityCache, findSlot, slotIsFree, upcomingBooking } from "@/lib/booking.ts";
 import { confirmBooking, createHold, deleteEvent, lostRace, setHoldStripeSession } from "@/lib/google.ts";
 import { siteUrl, stripe } from "@/lib/stripe.ts";
@@ -90,8 +90,7 @@ export async function POST(req: Request) {
         metadata,
         payment_intent_data: { description: `${offering.name}, ${when}`, metadata },
         expires_at: Math.floor(expiresAt.getTime() / 1000),
-        success_url: `${siteUrl()}/book/success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${siteUrl()}${offering.path}?release=${encodeURIComponent(hold.id)}`,
+        ...returnUrls(body.returnUrl, offering.path, hold.id),
       });
       await setHoldStripeSession(hold, session.id);
       return NextResponse.json({ url: session.url });
@@ -106,6 +105,35 @@ export async function POST(req: Request) {
       500,
     );
   }
+}
+
+/**
+ * Where Stripe sends the client afterwards. Bookings made through the widget on
+ * lightly.io go back to that page (only pages on returnOrigins, so this can't be used
+ * to redirect people elsewhere); the widget reads lb_session / lb_release from the URL.
+ */
+function returnUrls(raw: unknown, path: string, holdId: string) {
+  let page: URL | undefined;
+  try {
+    const u = new URL(String(raw));
+    if (returnOrigins.includes(u.origin)) page = u;
+  } catch {}
+
+  if (!page) {
+    return {
+      success_url: `${siteUrl()}/book/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${siteUrl()}${path}?release=${encodeURIComponent(holdId)}`,
+    };
+  }
+  page.hash = "";
+  page.searchParams.delete("lb_session");
+  page.searchParams.delete("lb_release");
+  const base = page.toString() + (page.search ? "&" : "?");
+  return {
+    // Stripe fills in {CHECKOUT_SESSION_ID}; it must stay unencoded.
+    success_url: `${base}lb_session={CHECKOUT_SESSION_ID}#book`,
+    cancel_url: `${base}lb_release=${encodeURIComponent(holdId)}#book`,
+  };
 }
 
 function error(message: string, status = 400) {

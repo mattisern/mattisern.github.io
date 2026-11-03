@@ -59,6 +59,8 @@ export default function BookingFlow({ offering }: { offering: Offering }) {
       const json = await res.json();
       if (!res.ok) throw new Error(json.error);
       setData(json);
+      // Open on the first day with free times, so times show without an extra click.
+      setDay((d) => d ?? (json.slots[0] ? dayKey(json.slots[0].start) : undefined));
       // Guessed here, in the browser: the server doesn't know the visitor's timezone.
       setCurrency((c) => c ?? defaultCurrency(offering.prices));
     } catch (e) {
