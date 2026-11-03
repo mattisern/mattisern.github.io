@@ -5,8 +5,8 @@ export type Weekday = "mon" | "tue" | "wed" | "thu" | "fri" | "sat" | "sun";
 export const booking = {
   // The session clients are paying for.
   session: {
-    name: "Session with Mattis",
-    description: "A 40-minute video session on Google Meet.",
+    name: "Conversation with Mattis",
+    description: "A 40-minute video conversation on Google Meet.",
     durationMinutes: 40,
   },
 
