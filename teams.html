@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Team coaching, workshops and leadership development with Mattis Erngren. Trusted by teams and leaders at Spotify, Klarna, PayPal/iZettle, GE Healthcare and Ericsson.">
+  <meta name="keywords" content="Mattis Erngren, team coaching, workshops, workshop leader, leadership development, organizational development, innovation, creativity, well-being at work" />
+  <meta property="og:title" content="Team coaching & workshops - Mattis Erngren" />
+  <meta property="og:url" content="https://mattisern.github.io/teams.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:description" content="Team coaching, workshops and leadership development. Trusted by teams and leaders at Spotify, Klarna, PayPal/iZettle, GE Healthcare and Ericsson." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <title>Team coaching &amp; workshops | Mattis Erngren, Lightly</title>
+</head>
+<body>
+  <div class="container">
+    <h1><a href="index.html">Mattis Erngren</a></h1>
+
+    <h2 class="fade-in" style="margin-top: 2rem;">For teams &amp; organizations</h2>
+    <p class="fade-in">
+      Teams do their best work when people can bring all of themselves to it. I work with leaders and teams through team coaching, workshops, talks and leadership development.
+    </p>
+
+    <h3 class="fade-in">How I can help</h3>
+    <ul>
+      <li>Clarity on purpose and direction</li>
+      <li>Problem solving</li>
+      <li>Organizational challenges</li>
+      <li>Leadership development</li>
+      <li>Innovation &amp; creativity</li>
+      <li>Processes that enable flow</li>
+      <li>Well-being at work</li>
+    </ul>
+
+    <h3 class="fade-in">Clients</h3>
+    <p class="fade-in">Trusted by teams &amp; leaders at Spotify, Klarna, PayPal/iZettle, GE Healthcare, 3, Ericsson — and over 40 other organizations.</p>
+    <p class="fade-in">Clients include CEOs and executives, including those of companies generating up to $100M in annual revenue.</p>
+    <p class="fade-in">From Boston to Brighton, Stockholm to Palo Alto — I've worked wherever I'm needed, in person or remote.</p>
+
+    <h3 class="fade-in">Words from clients</h3>
+    <p class="testimonial-block fade-in">
+      "A+++ presentation and highly recommended!"
+      <span>— Product manager, Spotify</span>
+    </p>
+    <p class="testimonial-block fade-in">
+      “Mattis is a joy listening to! With a very personal and easy way he gives both the tools and motivation to improve productivity and reduce stress.”
+      <span>— Clinical leader, GE Healthcare</span>
+    </p>
+    <p class="fade-in small-note">
+      Curious for more? <a href="https://www.linkedin.com/in/mattiserngren/" target="_blank">See additional testimonials on LinkedIn</a>.
+    </p>
+
+    <p class="fade-in">
+      Please use the button below to book a first meeting, where we explore what your team needs and how we can work together.
+    </p>
+    <div style="text-align: center;" class="fade-in">
+      <a href="https://calendly.com/mattis-erngren/exploration"><button>Book an exploration call</button></a>
+    </div>
+
+    <p class="fade-in small-note" style="margin-top: 4rem;">
+      Looking for one-on-one work for yourself? <a href="individuals.html">See conversations for individuals</a>.
+    </p>
+    <p id="star" class="fade-in"><a href="index.html" aria-label="Back to the front page">✶</a></p>
+  </div>
+
+  <script>
+    const elements = document.querySelectorAll('.fade-in');
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          el.style.transitionDelay = `${index * 0.15}s`;
+          el.classList.add('visible');
+          observer.unobserve(el);
+        }
+      });
+    }, { threshold: 0.1 });
+    elements.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
