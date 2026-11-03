@@ -174,7 +174,14 @@
         h(
           "p",
           { class: "lb-meta" },
-          `${offering.priceLabel || (free ? "Free" : offering.prices.map(formatPrice).join(" / "))} · ${durationMinutes} minutes · Google Meet`,
+          [
+            offering.kind,
+            `${durationMinutes} minutes`,
+            "Google Meet",
+            free ? "Free" : offering.prices.map(formatPrice).join(" / "),
+          ]
+            .filter(Boolean)
+            .join(" · "),
         ),
 
         days.length === 0

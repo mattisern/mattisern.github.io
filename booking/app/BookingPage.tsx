@@ -8,13 +8,13 @@ export function bookingMetadata(id: OfferingId): Metadata {
 }
 
 export default function BookingPage({ id }: { id: OfferingId }) {
-  const { heading, description, path, prices, notePrompt, priceLabel }: Offering = offerings[id];
+  const { heading, description, path, prices, notePrompt, kind }: Offering = offerings[id];
   return (
     <main>
       <h1>{heading}</h1>
       <p className="lede">{description}</p>
       <Suspense>
-        <BookingFlow offering={{ id, path, prices, notePrompt, priceLabel }} />
+        <BookingFlow offering={{ id, path, prices, notePrompt, kind }} />
       </Suspense>
     </main>
   );

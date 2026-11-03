@@ -19,8 +19,8 @@ export type Offering = {
   // 15000 = 150.00. With several, visitors on Swedish time default to SEK, on American
   // time to USD, everyone else to the first one. No prices = free, booked without payment.
   prices: Price[];
-  // Shown instead of the price in the booking widget, e.g. "Free exploration call".
-  priceLabel?: string;
+  // What kind of booking this is, first in the info line: "1-on-1 · 40 minutes · …".
+  kind: string;
 };
 
 // What clients can book. Both share the schedule and calendar below, so a time can
@@ -34,6 +34,7 @@ export const offerings = {
     description: "A 40-minute 1-on-1 video call on Google Meet.",
     notePrompt: "Anything you'd like me to know?",
     prices: [{ currency: "usd", amount: 15000 }],
+    kind: "1-on-1",
   },
   exploration: {
     path: "/explore",
@@ -44,7 +45,7 @@ export const offerings = {
       "A free 40-minute video call on Google Meet, where we explore what your team needs and how we can work together.",
     notePrompt: "What would you like to explore?",
     prices: [],
-    priceLabel: "Free exploration call",
+    kind: "Exploration call",
   },
 } satisfies Record<string, Offering>;
 
