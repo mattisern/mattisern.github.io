@@ -7,7 +7,7 @@ Clients pick a time on `/book` and pay with Stripe Checkout. Then a Google Calen
 There's no database. Your Google Calendar holds the bookings:
 
 1. **Client clicks "Continue to payment".** A busy event, `Hold: <name> (awaiting payment)`, goes into your calendar so nobody else can take the slot.
-2. **Payment succeeds.** Stripe's webhook turns the hold into `Conversation with Mattis (<name>)`. The event gets a Google Meet link, the client is added as a guest, and Google emails them the invite.
+2. **Payment succeeds.** Stripe's webhook turns the hold into `1-on-1 with Mattis (<name>)`. The event gets a Google Meet link, the client is added as a guest, and Google emails them the invite.
 3. **Client backs out, or doesn't pay within ~30 minutes.** The hold is deleted and the slot opens again.
 
 ## On lightly.io

@@ -27,9 +27,9 @@ export const offerings = {
   conversation: {
     path: "/book",
     label: "For individuals",
-    name: "Conversation with Mattis",
-    heading: "Book a conversation",
-    description: "A 40-minute video conversation on Google Meet.",
+    name: "1-on-1 with Mattis",
+    heading: "Book a 1-on-1",
+    description: "A 40-minute 1-on-1 video call on Google Meet.",
     notePrompt: "Anything you'd like me to know?",
     prices: [
       { currency: "eur", amount: 15000 },
