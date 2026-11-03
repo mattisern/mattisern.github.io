@@ -26,7 +26,7 @@ export type Offering = {
 export const offerings = {
   conversation: {
     path: "/book",
-    label: "1:1 conversation",
+    label: "For individuals",
     name: "Conversation with Mattis",
     heading: "Book a conversation",
     description: "A 40-minute video conversation on Google Meet.",
@@ -39,7 +39,7 @@ export const offerings = {
   },
   exploration: {
     path: "/explore",
-    label: "Exploration call",
+    label: "For teams",
     name: "Exploration call with Mattis",
     heading: "Book an exploration call",
     description:
