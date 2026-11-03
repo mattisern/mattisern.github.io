@@ -16,9 +16,11 @@ export type Offering = {
   // Label for the optional note field.
   notePrompt: string;
   // Prices clients can choose between, in the smallest currency unit (cents / öre):
-  // 15000 = 150.00. Visitors on Swedish time default to SEK, on American time to USD,
-  // everyone else to the first one. No prices = free, booked without payment.
+  // 15000 = 150.00. With several, visitors on Swedish time default to SEK, on American
+  // time to USD, everyone else to the first one. No prices = free, booked without payment.
   prices: Price[];
+  // Shown instead of the price in the booking widget, e.g. "Free exploration call".
+  priceLabel?: string;
 };
 
 // What clients can book. Both share the schedule and calendar below, so a time can
@@ -31,11 +33,7 @@ export const offerings = {
     heading: "Book a 1-on-1",
     description: "A 40-minute 1-on-1 video call on Google Meet.",
     notePrompt: "Anything you'd like me to know?",
-    prices: [
-      { currency: "eur", amount: 15000 },
-      { currency: "usd", amount: 15000 },
-      { currency: "sek", amount: 150000 },
-    ],
+    prices: [{ currency: "usd", amount: 15000 }],
   },
   exploration: {
     path: "/explore",
@@ -46,6 +44,7 @@ export const offerings = {
       "A free 40-minute video call on Google Meet, where we explore what your team needs and how we can work together.",
     notePrompt: "What would you like to explore?",
     prices: [],
+    priceLabel: "Free exploration call",
   },
 } satisfies Record<string, Offering>;
 

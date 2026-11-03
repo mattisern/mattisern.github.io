@@ -6,17 +6,14 @@ import { useRouter, useSearchParams } from "next/navigation";
 type Slot = { start: string; end: string };
 type Price = { amount: number; currency: string };
 type Availability = { durationMinutes: number; slots: Slot[] };
-type Offering = { id: string; path: string; prices: Price[]; notePrompt: string };
+type Offering = { id: string; path: string; prices: Price[]; notePrompt: string; priceLabel?: string };
 
 // en-CA formats dates as YYYY-MM-DD, which makes a handy grouping key in the visitor's timezone.
 const dayKey = (iso: string) => new Date(iso).toLocaleDateString("en-CA");
 
+// "150 USD": unambiguous for every visitor, unlike "$150" or "US$150".
 const formatPrice = ({ amount, currency }: Price) =>
-  new Intl.NumberFormat(undefined, {
-    style: "currency",
-    currency,
-    minimumFractionDigits: amount % 100 === 0 ? 0 : 2,
-  }).format(amount / 100);
+  `${(amount / 100).toLocaleString("en-GB", { minimumFractionDigits: amount % 100 === 0 ? 0 : 2 })} ${currency.toUpperCase()}`;
 
 /**
  * Guess the visitor's currency from their timezone (more reliable than browser language,
@@ -174,9 +171,9 @@ export default function BookingFlow({ offering }: { offering: Offering }) {
   return (
     <>
       <div className="meta">
+        <span>{offering.priceLabel ?? (free ? "Free" : offering.prices.map(formatPrice).join(" / "))}</span>
         <span>{data.durationMinutes} minutes</span>
         <span>Google Meet</span>
-        <span>{free ? "Free" : offering.prices.map(formatPrice).join(" / ")}</span>
       </div>
 
       <div className="card">

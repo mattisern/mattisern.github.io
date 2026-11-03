@@ -20,6 +20,7 @@ export async function GET(req: Request) {
         name: offering.name,
         prices: offering.prices,
         label: offering.label,
+        priceLabel: offering.priceLabel,
         notePrompt: offering.notePrompt,
       },
       slots: slots.map((s) => ({ start: s.start.toISOString(), end: s.end.toISOString() })),

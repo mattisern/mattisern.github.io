@@ -174,7 +174,7 @@
         h(
           "p",
           { class: "lb-meta" },
-          `${durationMinutes} minutes · Google Meet · ${free ? "Free" : offering.prices.map(formatPrice).join(" / ")}`,
+          `${offering.priceLabel || (free ? "Free" : offering.prices.map(formatPrice).join(" / "))} · ${durationMinutes} minutes · Google Meet`,
         ),
 
         days.length === 0
@@ -347,12 +347,10 @@
     return [...map.entries()];
   }
 
+  // "150 USD": unambiguous for every visitor, unlike "$150" or "US$150".
   function formatPrice({ amount, currency }) {
-    return new Intl.NumberFormat(LOCALE, {
-      style: "currency",
-      currency,
-      minimumFractionDigits: amount % 100 === 0 ? 0 : 2,
-    }).format(amount / 100);
+    const number = (amount / 100).toLocaleString(LOCALE, { minimumFractionDigits: amount % 100 === 0 ? 0 : 2 });
+    return `${number} ${currency.toUpperCase()}`;
   }
 
   // Swedish time → SEK, American time → USD, otherwise the first price.
