@@ -4,3 +4,8 @@
   base = "booking"
   command = "npm run build"
   publish = ".next"
+
+# Runs the Next.js app (pages, API routes) on Netlify. Without it Netlify only
+# uploads the build folder as plain files and every page is a 404.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"

@@ -18,6 +18,7 @@
     "stripe": "^23.1.0"
   },
   "devDependencies": {
+    "@netlify/plugin-nextjs": "^5.16.5",
     "@types/luxon": "^3.7.6",
     "@types/node": "^26.6.6",
     "@types/react": "^19.3.0",
