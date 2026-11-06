@@ -4,7 +4,7 @@ This folder is the booking app behind **book.lightly.io**. The rest of the repo 
 
 Clients pick a time on `/book` and pay with Stripe Checkout. Then a Google Calendar event with a Meet link is created and the invite goes to them by email.
 
-There's no database. Your Google Calendar holds the bookings:
+There's no database. Your Google Calendar holds the bookings. New bookings go to the primary calendar of the connected account (mattis.erngren@gmail.com). Times are also blocked by the calendars in `extraBusyCalendarIds` in `lib/config.ts` (mattis@lightly.io, which shares free/busy with the Gmail account; if that sharing is removed, the site can't load times).
 
 1. **Client clicks "Continue to payment".** A busy event, `Hold: <name> (awaiting payment)`, goes into your calendar so nobody else can take the slot.
 2. **Payment succeeds.** Stripe's webhook turns the hold into `1-on-1 with Mattis (<name>)`. The event gets a Google Meet link, the client is added as a guest, and Google emails them the invite.

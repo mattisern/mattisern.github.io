@@ -89,7 +89,7 @@ export const booking = {
 
   // Extra Google calendars to treat as busy (the booking calendar is always checked).
   // Use calendar IDs, e.g. "you@gmail.com" or "abc123@group.calendar.google.com".
-  extraBusyCalendarIds: [] as string[],
+  extraBusyCalendarIds: ["mattis@lightly.io"] as string[],
 
   // How long a client has to finish paying before the slot is released (Stripe minimum is 30).
   checkoutMinutes: 30,
