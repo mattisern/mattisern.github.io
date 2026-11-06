@@ -92,3 +92,4 @@
 .lb button.lb-tab + .lb-tab { border-left: 1px solid #333; }
 .lb button.lb-tab:hover { background: #1a1a1a; color: var(--text-color); }
 .lb button.lb-tab[aria-pressed="true"] { background: var(--primary-color); color: var(--text-color); }
+.lb .lb-notice { margin-top: 1rem; }

@@ -178,6 +178,12 @@ export default function BookingFlow({ offering }: { offering: Offering }) {
       </div>
 
       <div className="card">
+        {/* A refused booking closes the form, so its message has to show out here. */}
+        {!slot && formError && (
+          <p className="error" role="alert" style={{ marginBottom: 16 }}>
+            {formError}
+          </p>
+        )}
         <p className="step-label">1. Pick a day</p>
         {days.length === 0 ? (
           <p className="empty">No times are available right now. Please check back soon.</p>
@@ -194,6 +200,7 @@ export default function BookingFlow({ offering }: { offering: Offering }) {
                   onClick={() => {
                     setDay(key);
                     setSlot(undefined);
+                    setFormError(undefined);
                   }}
                 >
                   <span className="dow">{d.toLocaleDateString(undefined, { weekday: "short" })}</span>
@@ -215,7 +222,7 @@ export default function BookingFlow({ offering }: { offering: Offering }) {
                   type="button"
                   className="chip"
                   aria-pressed={s.start === slot?.start}
-                  onClick={() => setSlot(s)}
+                  onClick={() => { setSlot(s); setFormError(undefined); }}
                 >
                   {new Date(s.start).toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" })}
                 </button>

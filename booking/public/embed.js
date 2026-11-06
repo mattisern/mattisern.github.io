@@ -99,6 +99,7 @@
         set({ submitting: false, formError: err.message || "Something went wrong. Please try again." });
         if (err.status === 409) {
           set({ slot: null });
+          root.scrollIntoView({ behavior: "smooth", block: "start" });
           load();
         }
       }
@@ -183,6 +184,9 @@
             .filter(Boolean)
             .join(" · "),
         ),
+
+        // A refused booking closes the form, so its message has to show out here.
+        !state.slot && state.formError && h("p", { class: "lb-error lb-notice", role: "alert" }, state.formError),
 
         days.length === 0
           ? h("p", { class: "lb-hint" }, "No times are available right now. Please check back soon.")
