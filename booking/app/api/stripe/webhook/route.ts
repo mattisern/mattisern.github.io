@@ -4,6 +4,7 @@ import { getOffering, offerings } from "@/lib/config.ts";
 import { bookingProps, confirmBooking, deleteEvent, getEvent } from "@/lib/google.ts";
 import { stripe } from "@/lib/stripe.ts";
 import { clearAvailabilityCache } from "@/lib/booking.ts";
+import { notifyOwner } from "@/lib/notify.ts";
 
 export async function POST(req: Request) {
   let event: Stripe.Event;
@@ -45,7 +46,7 @@ async function confirm(session: Stripe.Checkout.Session) {
   if (!m.start || !m.email) return; // not a booking checkout
   // Checkouts started before offerings existed carry no offering; they were all conversations.
   const offering = getOffering(m.offering) ?? { id: "conversation", ...offerings.conversation };
-  const event = await confirmBooking({
+  const { event, isNew } = await confirmBooking({
     holdEventId: m.holdEventId,
     slot: { start: new Date(m.start), end: new Date(m.end) },
     client: { name: m.name, email: m.email },
@@ -54,6 +55,11 @@ async function confirm(session: Stripe.Checkout.Session) {
     stripeSession: session.id,
   });
   console.log(`[webhook] booked ${m.start} for ${m.email} (event ${event.id})`);
+  // Stripe can deliver an event twice; only the first confirmation sends the email.
+  if (isNew) {
+    const paid = session.amount_total != null ? `${session.amount_total / 100} ${session.currency?.toUpperCase()}` : undefined;
+    await notifyOwner(event, { title: offering.name, name: m.name, email: m.email, paid });
+  }
 }
 
 async function releaseHold(session: Stripe.Checkout.Session) {

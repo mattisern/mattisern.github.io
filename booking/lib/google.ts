@@ -207,7 +207,7 @@ export async function confirmBooking(opts: {
   stripeSession?: string;
 }) {
   const existing = opts.holdEventId ? await getEvent(opts.holdEventId) : null;
-  if (existing && bookingProps(existing)?.status === "confirmed") return existing;
+  if (existing && bookingProps(existing)?.status === "confirmed") return { event: existing, isNew: false };
   // Google dedupes Meet creation on this id, so retries don't make a second Meet.
   const requestId = opts.stripeSession ?? existing?.id ?? crypto.randomUUID();
 
@@ -234,7 +234,8 @@ export async function confirmBooking(opts: {
   };
   const query = { conferenceDataVersion: "1", sendUpdates: "all" };
 
-  return existing
+  const event = await (existing
     ? gcal<CalendarEvent>(eventsPath(existing.id), { method: "PATCH", query, body })
-    : gcal<CalendarEvent>(eventsPath(), { method: "POST", query, body });
+    : gcal<CalendarEvent>(eventsPath(), { method: "POST", query, body }));
+  return { event, isNew: true };
 }

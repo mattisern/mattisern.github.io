@@ -3,6 +3,7 @@ import { DateTime } from "luxon";
 import { booking, getOffering, returnOrigins } from "@/lib/config.ts";
 import { clearAvailabilityCache, findSlot, slotIsFree, upcomingBooking } from "@/lib/booking.ts";
 import { confirmBooking, createHold, deleteEvent, lostRace, setHoldStripeSession } from "@/lib/google.ts";
+import { notifyOwner } from "@/lib/notify.ts";
 import { siteUrl, stripe } from "@/lib/stripe.ts";
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -56,13 +57,14 @@ export async function POST(req: Request) {
 
     try {
       if (!paid) {
-        await confirmBooking({
+        const { event } = await confirmBooking({
           holdEventId: hold.id,
           slot,
           client: { name, email },
           title: offering.name,
           offering: offering.id,
         });
+        await notifyOwner(event, { title: offering.name, name, email });
         return NextResponse.json({ confirmed: { start: slot.start.toISOString(), email } });
       }
 

@@ -91,6 +91,11 @@ export const booking = {
   // Use calendar IDs, e.g. "you@gmail.com" or "abc123@group.calendar.google.com".
   extraBusyCalendarIds: ["mattis@lightly.io"] as string[],
 
+  // Who gets an email about each new booking, and who it appears to come from. Resend's
+  // shared onboarding@resend.dev sender only delivers to the Resend account's own address.
+  notifyEmail: "mattis.erngren@gmail.com",
+  notifyFrom: "Lightly bookings <onboarding@resend.dev>",
+
   // How long a client has to finish paying before the slot is released (Stripe minimum is 30).
   checkoutMinutes: 30,
 };

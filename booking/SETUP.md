@@ -58,3 +58,7 @@ To reconnect Google (for example after changing account), run `npm run google-au
 - **You don't get an invite email.** You're the organiser, so the booking simply appears in your calendar. Stripe emails you about each payment.
 - **Cancelling or rescheduling** is manual. Move or delete the event in Google Calendar (Google notifies the client), and refund in Stripe if needed.
 - **Holds still around after 30 min?** The next visit to `/book` cleans them up even if Stripe's webhook was missed.
+
+## Booking notification emails
+
+Google doesn't email an event's organiser, so the site emails `notifyEmail` (in `lib/config.ts`) about each new booking through Resend. It needs `RESEND_API_KEY` in `.env.local` and in Netlify. The shared `onboarding@resend.dev` sender only delivers to the Resend account's own address (mattis.erngren@gmail.com). To send to another address, verify a domain in Resend and change `notifyFrom`. A failed email is logged and never blocks a booking.
