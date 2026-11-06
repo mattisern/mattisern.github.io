@@ -75,7 +75,7 @@ export const booking = {
     wed: ["11:00", "17:00"],
     thu: ["11:00", "17:00"],
     fri: ["11:00", "17:00"],
-    sat: ["07:00"],
+    sat: ["07:00", "15:00"],
     sun: [],
   } satisfies Record<Weekday, string[]>,
 
